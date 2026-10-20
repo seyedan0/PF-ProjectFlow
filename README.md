@@ -1,196 +1,227 @@
-# 🚀 ProjectFlow (`pf`)
-> **Visual Architecture, Codebase Intelligence & Rolling-Wave Project Control Toolkit for AI-Assisted Coding**
+# ProjectFlow (`pf`)
+### Visual Architecture, Codebase Intelligence & Rolling-Wave Control for Vibe Coding
 
-ProjectFlow (`pf`) is a lightweight, zero-token, framework-agnostic toolkit designed to bring architectural discipline, visual observability, and rolling-wave planning to AI-assisted coding.
+[![Version](https://img.shields.io/badge/version-1.0.0-10B981.svg?style=flat-square)](https://github.com/seyedan0/PF-ProjectFlow/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Zero External AI API](https://img.shields.io/badge/External%20AI%20API-Zero%20(Local%20Agent)-F59E0B.svg?style=flat-square)](#-core-philosophy--architectural-principles)
+[![IDE Agnostic](https://img.shields.io/badge/IDE%20Agnostic-Antigravity%20%7C%20Cursor%20%7C%20Claude-8B5CF6.svg?style=flat-square)](#-built-in-default-skills-pack-agentsskills)
 
-Instead of prompting an AI coding agent with 50 pages of raw documentation or letting it create uncoordinated files and drift from intended architecture, ProjectFlow provides a **Single Source of Truth** inside `.project-control/` that is synchronized across **5 Visual Graphs**, **Multi-Agent Rules** (Antigravity, Cursor, Claude Code), and an **Automated Codebase Scanner**.
+<p align="center">
+  <img src="./assets/pf-hero-architecture.svg" alt="ProjectFlow Architecture &amp; Control Flow Diagram" width="100%">
+</p>
 
 ---
 
-```mermaid
-flowchart LR
-    Docs["📄 Project Specs & PRD"] --> Agent["🤖 Coding Agent (Antigravity / Cursor / Claude)"]
-    Agent --> Intake["BOOTSTRAP_INTAKE.md"]
-    Intake --> Control[".project-control/ (Source of Truth)"]
+## 🎯 Why ProjectFlow? (The Problem & Solution)
 
-    subgraph ControlState [".project-control/ Multi-Layer Graphs"]
-        Roadmap["1. roadmap.json (Macro Phases)"]
-        Arch["2. architecture.json (APIs & Rules)"]
-        Codebase["3. codebase-map.json (Files & Drift)"]
-        Tasks["4. state.json (Rolling-Wave Horizon)"]
-        Canvas["5. canvas.json (Ideation Whiteboard)"]
-    end
+### The Problem with "Vibe Coding"
+When building complex software with modern AI coding assistants (*Antigravity, Cursor, Claude Code*), projects inevitably face three severe failure modes:
+1. **Loss of Architectural Visibility**: AI agents lack global architectural memory. Without a continuous visual model, modules become tangled spaghetti and team members lose sight of system boundaries.
+2. **Context-Window Bloat**: Dumping 50-page PRDs or 100 premature static tasks into chat consumes thousands of tokens, confuses the model, and leads to hallucinations and scope creep.
+3. **Silent Architecture Drift**: Agents claim "task complete", but covertly create unregistered files, violate forbidden layer boundaries (e.g., UI directly importing DB models), or bypass API contracts.
 
-    Control --> ControlState
-    ControlState <--> Studio["🖥 Visual Control Studio (React Flow + ELKjs UI)"]
-    ControlState --> Scanner["🔍 pf:scan (Static Drift Detector)"]
-    ControlState --> PromptBundler["🎯 pf:prompt (Low-Token Context Compiler)"]
-    PromptBundler --> NextTask["NEXT_TASK_PROMPT.md"]
-    NextTask --> Agent
+### The Solution: ProjectFlow (`pf`)
+ProjectFlow introduces an autonomous governance and visual control harness inside your repository:
+- **Embedded Single Source of Truth (`.project-control/`)**: 5 synchronized multi-layer JSON models governing roadmaps, APIs, file registries, rolling-wave tasks, and whiteboards.
+- **Rolling-Wave Task Horizon**: Maintains a macro view of the entire lifecycle, but generates **only the next 1–3 concrete, atomic tasks** derived from completed history and current codebase state.
+- **Zero External AI API Keys**: ProjectFlow does **NOT** require API keys (OpenAI/Anthropic). Your IDE agent **IS** the intelligence; `pf` provides the deterministic graph engine, AST scanner, and low-token context bundler.
+- **Two-Way React Flow Studio**: A local browser UI (`http://localhost:4321`) with ELKjs auto-layout and two-way file synchronization—inspect nodes, drag whiteboards, and trigger agent actions.
+- **Automated AST Codebase Scanner**: Multi-language static scanner inspecting physical source imports to red-flag architectural drift before it enters your git history.
+
+---
+
+## ⚡ 1-Minute Quick Start
+
+### Option A: Agent Bootstrap Prompt (Recommended)
+You do not need to manually configure files. Simply drop this prompt into **Antigravity**, **Cursor**, or **Claude Code** alongside your project specs or documentation:
+
+```text
+Clone or install ProjectFlow (https://github.com/seyedan0/PF-ProjectFlow) into this repository.
+Read BOOTSTRAP_INTAKE.md and .agents/skills/project-flow/SKILL.md.
+Analyze our project documentation/codebase and initialize .project-control/ with our Macro Roadmap, API & System Architecture, Codebase Map, and initial Rolling-Wave Tasks, then run `npm run pf:sync-rules`.
 ```
 
----
-
-## 🔑 Core Philosophy & Architectural Principles
-
-1. **Zero External AI API Keys**: ProjectFlow does NOT call external AI APIs. The coding agent inside your IDE (*Antigravity, Cursor, Claude Code*) IS the intelligence. ProjectFlow provides the deterministic graph control, validator, static scanner, and low-token compiler.
-2. **Deterministic Context Bundler**: Compiles only the exact slice of roadmap, module responsibilities, API contracts, rules, and files needed for the current active task into `.project-control/NEXT_TASK_PROMPT.md` (~300–800 tokens instead of 50,000+ tokens).
-3. **Rolling-Wave Horizon**: Never generates 100 brittle tasks upfront. It maintains a macro roadmap of phases while generating only 1–3 concrete, atomic tasks for the immediate horizon.
-4. **Automated Drift Detection**: `npm run pf:scan` parses physical imports across your codebase (`.js`, `.ts`, `.py`, `.go`, `.php`, `.c`, etc.), flagging unregistered files, layer violations, and module boundary breaches directly in the UI.
-5. **Universal Reusability**: ProjectFlow is completely decoupled from any specific business application. Its template directory `.project-control/` is in a clean, blank skeleton state waiting to be dropped into **ANY** target software project.
-
----
-
-## 📖 Section 1: For Humans (Developer Setup & Workflows)
-
-### 1. Install ProjectFlow into Any Target Project
-To add ProjectFlow to an existing repository or new project folder, run:
+### Option B: Manual CLI Installation
+To install the ProjectFlow toolkit and pre-built Visual Studio into any target project:
 
 ```bash
-# From the ProjectFlow repository:
-node scripts/pf-install.mjs /path/to/your-target-project
+# Clone ProjectFlow or run directly from your local toolkit:
+node path/to/project-flow/scripts/pf-install.mjs ./my-target-project
 
-# Or with force overwrite:
-node scripts/pf-install.mjs /path/to/your-target-project --force
-```
-
-This automatically:
-- Copies clean, blank `.project-control/` templates and validation schemas.
-- Installs the Antigravity skill `.agents/skills/project-flow/`.
-- Copies `BOOTSTRAP_INTAKE.md` and CLI runner scripts (`scripts/`).
-- Bundles the pre-built Visual Control Studio (`ui/dist/`) so you can run the UI immediately without installing React/Vite devDependencies in your target project!
-- Adds `pf:*` npm script commands and `zod` to the target project's `package.json`.
-
----
-
-### 2. Launching the Visual Control Studio
-In your project directory, run:
-
-```bash
-# Start Visual Control Studio reading .project-control/
+# Launch Visual Control Studio in your target project:
+cd my-target-project
 npm run pf:ui
 ```
-Open **`http://localhost:4321`** in your browser.
-
-- **Blank Onboarding Screen**: If `.project-control/` is uninitialized, the UI displays a clean banner with a **1-Click Copy Setup Prompt** button to give to your IDE agent.
-- **Preview Demo Project**: Test all 5 populated graphs anytime without touching your project files by running:
-  ```bash
-  npm run pf:ui:demo
-  ```
-  *(Or click "Preview Demo" directly inside the UI header!)*
 
 ---
 
-### 3. The 5 Synchronized Graph Tabs (React Flow + ELKjs Auto-Layout)
+## 🗺 The 5 Synchronized Visual Graph Layers
 
-| Tab | Model File | Description |
-| :--- | :--- | :--- |
-| **1. Macro Roadmap** | `roadmap.json` | End-to-end phases/milestones (`planned`, `in_progress`, `completed`, `blocked`), target outcomes, and deliverables. |
-| **2. API & Architecture** | `architecture.json` | System modules, API endpoints (with HTTP method badges GET/POST/PUT/DELETE), request/response contracts, and architectural rules. |
-| **3. Codebase & File Map** | `codebase-map.json` | File tree and observed dependencies. **Highlights architecture drift** (mismatch between intended and observed roles or forbidden layer imports). |
-| **4. Active Tasks** | `state.json` | Current rolling-wave horizon tasks, order badges, statuses (`ready`, `in_progress`, `done`), and acceptance criteria. |
-| **5. Ideation Canvas** | `canvas.json` | Freeform whiteboard for sticky notes and proposals. Node positions auto-save to disk on drag stop (`onNodeDragStop`). |
+All architectural state is maintained inside `.project-control/` and rendered in the **Visual Control Studio**:
 
-- **Two-Way Editing**: Click any node in any graph to open the **Right-Hand Inspector Drawer** to edit fields, change status, add deliverables, or delete nodes directly back to JSON.
-- **Agent Command Bar**: Floating dock with 1-click buttons to copy ready-to-paste instructions for the IDE agent (*Plan Next Task*, *Context Bundle*, *Drift Audit*, *Sync Rules*, *Reset*).
+| Tab | State File | Visual Topology | Core Responsibility |
+| :--- | :--- | :--- | :--- |
+| **1. Macro Roadmap** | [`roadmap.json`](file:///.project-control/roadmap.json) | Left-to-Right Spine (`RIGHT` in ELKjs) | End-to-end lifecycle phases (`M1` to `M5+`), phase outcomes, target deliverables, and dependencies. |
+| **2. API & Architecture** | [`architecture.json`](file:///.project-control/architecture.json) | Top-to-Bottom C4 Stratum (`DOWN` in ELKjs) | Subsystem modules, REST/GraphQL endpoints with request/response schemas, entities, and hard guardrails (`RULE-*`). |
+| **3. Codebase Map & Drift** | [`codebase-map.json`](file:///.project-control/codebase-map.json) | Layered Tree (`ui`, `api`, `core`, `scripts`) | File catalog mapping intended vs. observed responsibilities. **Highlights red-flagged architecture drift (`#F43F5E`)**. |
+| **4. Rolling-Wave Horizon** | [`state.json`](file:///.project-control/state.json) | Linear Active Horizon | Only the next 1–3 concrete tasks for the current milestone. Keeps execution uncluttered and focused. |
+| **5. Ideation Canvas** | [`canvas.json`](file:///.project-control/canvas.json) | Freeform Whiteboard | Sticky notes, visual metaphors, and system proposals that promote directly into roadmap deliverables. |
 
 ---
 
-### 4. Codebase Static Scanner & Drift Detector
+## 🧰 Built-in Default Skills Pack (`.agents/skills/`)
 
-```bash
-# Inspect actual source code on disk against architecture rules:
-npm run pf:scan
+ProjectFlow ships with 5 production skills derived from open-source engineering standards:
 
-# Automatically register discovered files into codebase-map.json:
-npm run pf:scan -- --fix
+```text
+.agents/skills/
+├── project-flow/            # Master Orchestrator (Intake, Rolling-Wave, Validation, CLI)
+├── pf-spec-architect/       # GitHub Spec-Kit & OpenAPI contract synthesis
+├── pf-graph-choreographer/  # C4 Model hierarchy & ELKjs graph ergonomics
+├── pf-visual-storyteller/   # Xiaohei protocol, visual metaphors & SVG diagrams
+└── pf-drift-auditor/        # Tri-model architecture drift analysis
 ```
 
-The scanner parses actual imports (`import`, `require`, `from ... import`, `#include`, etc.) and detects:
-- **Unregistered Files**: Source files created during coding not yet cataloged in `codebase-map.json`.
-- **Missing Files**: Registered files that were deleted or moved.
-- **Layer & Boundary Violations**: A `core` module importing a `ui` module, or a module importing another module without an explicit dependency declaration.
+### IDE Activation Triggers
+
+| Skill | Origin / Inspiration | 1-Line IDE Trigger Prompt |
+| :--- | :--- | :--- |
+| **`project-flow`** | Core Engine | `"Plan the next rolling-wave task and compile context"` or `npm run pf:prompt` |
+| **`pf-spec-architect`** | GitHub Spec-Kit & OpenAPI | `"Extract API contracts, data models, and stack rules from this specification"` |
+| **`pf-graph-choreographer`** | C4 Model & ELKjs | `"Update architecture.json and roadmap.json ensuring max 7-12 nodes per view"` |
+| **`pf-visual-storyteller`** | `ian-xiaohei-illustrations` | `"Create a visual metaphor SVG diagram explaining our data ingestion pipeline"` |
+| **`pf-drift-auditor`** | Archagent & dependency-cruiser | `"Audit our actual codebase imports against architecture rules and report drift"` |
 
 ---
 
-### 5. CLI Command Reference
+## 💻 CLI Command Reference (`npm run pf:*`)
 
-| Command | Action |
-| :--- | :--- |
-| `npm run pf:status` | Shows initialization state, macro roadmap milestone progress, and active tasks. |
-| `npm run pf:ui` | Starts the Visual Control Studio server on `http://localhost:4321`. |
-| `npm run pf:ui:demo` | Starts the Visual Control Studio previewing `templates/example-project/`. |
-| `npm run pf:scan` | Scans physical repository files and reports architectural drift. |
-| `npm run pf:validate` | Validates all `.project-control/*.json` files against strict Zod schemas and cross-referenced IDs. |
-| `npm run pf:prompt [taskId]` | Deterministically compiles `.project-control/NEXT_TASK_PROMPT.md` for the active task. |
-| `npm run pf:complete <taskId> -- -s "..."` | Marks task completed, logs git diff & file roles, and prepares rolling-wave horizon for the next task. |
-| `npm run pf:sync-rules` | Exports architectural rules to `.cursorrules`, `CLAUDE.md`, and `.agents/rules/`. |
-| `npm run pf:reset` | Resets `.project-control/` back to clean, blank skeleton templates (`"initialized": false`). |
+ProjectFlow provides zero-token developer and agent CLI commands via `scripts/pf-cli.mjs`:
 
----
+```bash
+# Project State & Health
+npm run pf:status                  # Terminal dashboard of roadmap, completed history, and active horizon
+npm run pf:validate                # Strict schema validation across all JSON files & cross-referenced IDs
 
-## 🤖 Section 2: For AI Agents (`Quick Start Prompt`)
+# Rolling-Wave Execution Cycle
+npm run pf:prompt [taskId]         # Compiles hyper-focused .project-control/NEXT_TASK_PROMPT.md (~350 tokens)
+npm run pf:complete <id> -s "..."  # Archives task, checks git changes, and advances rolling wave
+npm run pf:sync-rules              # Exports guardrail rules to .cursorrules, CLAUDE.md, and .agents/rules/
 
-When bootstrapping a new or existing repository with an AI coding agent (*Antigravity, Cursor, Claude Code*), paste this **exact 2-line prompt** into the chat alongside your project specification or documentation:
+# Static Codebase Scanner & Drift Auditor
+npm run pf:scan [targetDir]        # Parses AST imports (JS/TS/PY/GO/C) and reports boundary violations
+npm run pf:scan -- --fix           # Discovers uncataloged files and auto-registers them into codebase-map.json
 
-> ```text
-> Read BOOTSTRAP_INTAKE.md and .agents/skills/project-flow/SKILL.md.
-> Analyze our project docs and initialize ProjectFlow (.project-control/) with our Macro Roadmap, API Structure, Architecture Rules, and initial rolling-wave tasks.
-> ```
+# Visual Control Studio
+npm run pf:ui                      # Launches React Flow Studio at http://localhost:4321
+npm run pf:ui:demo                 # Launches Studio previewing populated reference project (TaskForge)
 
-### What the AI Agent Does Next (Autonomous Intake Protocol)
-1. **Reads Intake Rules**: Reads [`BOOTSTRAP_INTAKE.md`](file:///d:/Programing/PF-ProjectFlow/BOOTSTRAP_INTAKE.md) and [`.agents/skills/project-flow/SKILL.md`](file:///d:/Programing/PF-ProjectFlow/.agents/skills/project-flow/SKILL.md).
-2. **Hydrates `.project-control/`**:
-   - `roadmap.json`: Populates 3–6 high-level phases with target outcomes and deliverables.
-   - `architecture.json`: Extracts modules, layers (`core`, `server`, `ui`, `cli`), REST API endpoints with request/response schemas, and guardrail rules.
-   - `state.json`: Sets `"initialized": true`, sets `activeMilestoneId: "M1"`, and generates **only the first 1–2 concrete tasks** for `activeTasks`.
-   - `codebase-map.json`: Catalogs planned initial files and roles.
-3. **Validates State**: Runs `npm run pf:validate` to ensure zero schema violations.
-4. **Compiles Prompt**: Runs `npm run pf:prompt` to produce `.project-control/NEXT_TASK_PROMPT.md`.
-5. **Executes & Advances Rolling-Wave**:
-   - Executes code according to acceptance criteria.
-   - Updates `codebase-map.json`.
-   - Runs `npm run pf:complete TASK-01 -- --summary "Implemented core logic"`.
-   - Generates `TASK-02` from `roadmap.json` (Mode 1: Rolling-Wave Planner).
+# Template Management
+npm run pf:reset                   # Resets .project-control/ back to clean blank skeleton ("initialized": false)
+npm run pf:install <targetDir>     # Installs ProjectFlow toolkit and pre-built Studio into target project
+```
 
 ---
 
-## 📂 Repository File Structure
+## 🖥 Visual Control Studio
+
+The **Visual Control Studio** is a pre-built React Flow application served locally:
+
+- **ELKjs Auto-Layout**: 1-click automatic layout calculation with clean spacing and minimal edge crossing.
+- **Two-Way Inspector Drawer**: Click any node across the 5 graphs to edit labels, change status (`planned`, `in_progress`, `completed`, `blocked`), update request/response payloads, or inspect drift reasons.
+- **Agent Command Bar**: Floating toolbar to copy pre-formatted agent instructions directly to clipboard.
+- **Zero Build Step in Target Project**: The production bundle is pre-compiled under `ui/dist/` and served via `scripts/ui-server.mjs`.
+
+---
+
+<details>
+<summary>🇮🇷 راهنمای سریع به زبان فارسی (Persian Quick Guide)</summary>
+
+### پروجکت‌فلو (`pf`) چیست؟
+پروجکت‌فلو یک جعبه‌ابزار متن‌باز برای کنترل معماری، جلوگیری از انحراف کد (Architecture Drift) و مدیریت تسک‌های چرخشی (Rolling-Wave) در فرآیند برنامه‌نویسی با هوش مصنوعی (Vibe Coding) است.
+
+### مشکلات اصلی که پروجکت‌فلو حل می‌کند:
+1. **فراموشی معماری توسط AI**: مدل‌های هوش مصنوعی تصویر کلی سیستم را فراموش کرده و کدهای درهم‌تنیده و اسپاگتی تولید می‌کنند.
+2. **هدررفت توکن با پرامپت‌های ۵۰ صفحه‌ای**: فرستادن کل داکیومنت در چت باعث توهم هوش مصنوعی می‌شود. پروجکت‌فلو با ابزار `pf:prompt` فقط اطلاعات تسک جاری (~۳۵۰ توکن) را ارسال می‌کند.
+3. **انحراف بی‌صدا از معماری (Drift)**: ایجنت‌ها ادعا می‌کنند کار انجام شده، اما فایل‌های ثبت‌نشده یا ایمپورت‌های غیرمجاز (مانند دسترسی مستقیم UI به دیتابیس) می‌سازند. اسکنر `pf:scan` این خطاها را فورا قرمز می‌کند.
+
+### نحوه راه‌اندازی سریع در یک دقیقه:
+کافیست پرامپت زیر را به همراه داکیومنت پروژه خود داخل چت هوش مصنوعی (**Antigravity** یا **Cursor** یا **Claude Code**) کپی کنید:
+
+```text
+پروژه ProjectFlow را داخل این ریپازیتوری نصب کن.
+فایل‌های BOOTSTRAP_INTAKE.md و .agents/skills/project-flow/SKILL.md را بخوان.
+داکیومنت‌ها و کدهای ما را تحلیل کن و پوشه .project-control/ را بر اساس ۵ لایه گراف (رودمپ، معماری و API، نقشه فایل‌ها و تسک‌های جاری) مقداردهی اولیه کن و در انتها npm run pf:sync-rules را اجرا کن.
+```
+
+### اجرای استودیوی بصری:
+برای مشاهده گراف‌ها در مرورگر کافیست دستور زیر را بزنید:
+```bash
+npm run pf:ui
+```
+سپس آدرس `http://localhost:4321` را باز کنید.
+</details>
+
+---
+
+## 📂 Repository Architecture
 
 ```text
 PF-ProjectFlow/
 ├── .agents/
-│   └── skills/
-│       └── project-flow/          # Antigravity skill instructions & reference docs
-│           ├── SKILL.md           # 5 operational modes (Planner, Finisher, Sync, Drift, Bootstrap)
-│           └── references/        # Architecture rules & intake guides
+│   ├── rules/project-flow.md      # Auto-synchronized rules for Antigravity
+│   └── skills/                    # 5 Production-Grade Default Skills
+│       ├── project-flow/          # Main controller & 5 operational modes
+│       ├── pf-spec-architect/     # Spec-Kit API contracts & rules catalog
+│       ├── pf-graph-choreographer/# C4 Model & ELKjs layout rules
+│       ├── pf-visual-storyteller/ # Xiaohei visual metaphors & SVG pipelines
+│       └── pf-drift-auditor/      # Tri-model architecture drift analysis
 ├── .project-control/              # Clean blank template state (Single Source of Truth)
-│   ├── state.json                 # Project metadata & active rolling-wave tasks
-│   ├── roadmap.json               # Macro milestones & phase dependencies
-│   ├── architecture.json          # System modules, API contracts & guardrails
+│   ├── state.json                 # Project identity & rolling-wave horizon
+│   ├── roadmap.json               # Macro milestones & deliverable phases
+│   ├── architecture.json          # Modules, API contracts, entities & rules
 │   ├── codebase-map.json          # File registry & observed drift flags
 │   ├── canvas.json                # Ideation whiteboard nodes & edges
 │   ├── activity.jsonl             # Immutable audit trail
 │   └── schemas/                   # Official JSON schemas
+├── assets/
+│   └── pf-hero-architecture.svg   # Self-contained hero architecture diagram
 ├── templates/
 │   ├── blank/                     # Pristine uninitialized skeleton templates
-│   └── example-project/           # Fully populated reference demo (TaskForge)
+│   └── example-project/           # Fully populated reference project (TaskForge)
 ├── scripts/
-│   ├── pf-cli.mjs                 # Unified CLI command router
-│   ├── ui-server.mjs              # Local two-way API server & static SPA host
-│   ├── pf-scan.mjs                # Multi-language static scanner & drift auditor
+│   ├── pf-cli.mjs                 # Unified CLI router & prompt compiler
+│   ├── ui-server.mjs              # Local two-way API server & static host
+│   ├── pf-scan.mjs                # Multi-language AST static import scanner
 │   ├── pf-install.mjs             # Target-project setup & installer
 │   ├── validate-control.mjs       # Cross-referenced schema validator
 │   └── schemas.mjs                # Zod validation schemas
 ├── ui/                            # Visual Control Studio (React Flow + ELKjs)
-│   ├── src/                       # Custom nodes, inspectors, command bar, & layout
-│   └── dist/                      # Pre-built production bundle
-├── BOOTSTRAP_INTAKE.md            # Agent intake protocol for target repositories
-├── package.json                   # Toolkit scripts & dependencies
-└── README.md                      # Comprehensive user & agent guide
+│   ├── src/                       # Custom nodes, inspectors, and layouts
+│   └── dist/                      # Pre-built production bundle for instant runs
+├── .cursorrules                   # Auto-synchronized rules for Cursor AI
+├── CLAUDE.md                      # Auto-synchronized rules for Claude Code
+├── BOOTSTRAP_INTAKE.md            # Agent intake protocol for new projects
+├── NOTICE.md                      # Open-source attribution & credits
+├── CHANGELOG.md                   # Version history & release notes
+├── LICENSE                        # MIT License (2026)
+└── package.json                   # Version 1.0.0
 ```
 
 ---
 
+## 📜 Open-Source Credits & Acknowledgments
+
+ProjectFlow was inspired by and honors the work of:
+- **[ian-xiaohei-illustrations](https://github.com/helloianneo/ian-xiaohei-illustrations)** by Ian Neo (Modular `SKILL.md` + `references/` architecture and visual metaphor DNA).
+- **The C4 Model** by Simon Brown & **React Flow / ELKjs** (Hierarchical software architecture graphs).
+- **GitHub Spec-Kit** (Specification-driven rolling-wave task synthesis).
+- **Archagent** & **dependency-cruiser** (Evidence-based codebase drift auditing).
+
+See [`NOTICE.md`](NOTICE.md) for detailed attributions.
+
+---
+
 ## 🛡 License
-MIT License. Free to use, adapt, and bundle into any AI-assisted workflow or software repository.
+
+Distributed under the **MIT License** (2026). See [`LICENSE`](LICENSE) for details.

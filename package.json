@@ -1,6 +1,6 @@
 {
   "name": "project-flow",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Visual architecture, codebase intelligence, and rolling-wave project control toolkit for AI-assisted coding",
   "type": "module",
   "main": "scripts/validate-control.mjs",

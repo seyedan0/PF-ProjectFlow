@@ -1,0 +1,305 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090E17"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0A1120"/>
+    </linearGradient>
+
+    <!-- Emerald Glow for Core Engine -->
+    <radialGradient id="emeraldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Blue Glow for Graph Layers -->
+    <radialGradient id="blueGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Subtle Drop Shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Markers for Arrows -->
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#10B981"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#3B82F6"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#F59E0B"/>
+    </marker>
+    <marker id="arrowRose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#F43F5E"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif; font-weight: 700; fill: #F8FAFC; }
+    .mono-text { font-family: "JetBrains Mono", "SF Mono", Consolas, Menlo, monospace; }
+    .body-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif; fill: #94A3B8; }
+    .card-border { stroke-width: 1.5; fill: #1E293B; }
+    .glass-fill { fill: rgba(30, 41, 59, 0.7); backdrop-filter: blur(8px); }
+  </style>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Subtle Blueprint Grid Pattern -->
+  <g stroke="#1E293B" stroke-width="1" stroke-opacity="0.4">
+    <line x1="100" y1="0" x2="100" y2="600"/>
+    <line x1="300" y1="0" x2="300" y2="600"/>
+    <line x1="600" y1="0" x2="600" y2="600"/>
+    <line x1="900" y1="0" x2="900" y2="600"/>
+    <line x1="1100" y1="0" x2="1100" y2="600"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="480" x2="1200" y2="480"/>
+  </g>
+
+  <!-- Ambient Glow Spots -->
+  <circle cx="340" cy="290" r="180" fill="url(#emeraldGlow)"/>
+  <circle cx="730" cy="270" r="220" fill="url(#blueGlow)"/>
+
+  <!-- ============================================================ -->
+  <!-- HEADER & LOGO BRANDING -->
+  <!-- ============================================================ -->
+  <g transform="translate(60, 45)">
+    <!-- Brand Icon -->
+    <rect x="0" y="0" width="36" height="36" rx="8" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="2"/>
+    <path d="M 10 18 L 18 10 L 26 18 L 18 26 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="18" cy="18" r="3" fill="#10B981"/>
+
+    <!-- Title & Tagline -->
+    <text x="48" y="24" class="title-text" font-size="20" letter-spacing="-0.5">ProjectFlow <tspan fill="#10B981">(`pf`)</tspan></text>
+    <text x="48" y="42" class="body-text" font-size="12">Autonomous Architecture, Codebase Intelligence &amp; Rolling-Wave Control</text>
+
+    <!-- Top Status Pills -->
+    <g transform="translate(730, 8)">
+      <rect x="0" y="0" width="130" height="26" rx="13" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <circle cx="12" cy="13" r="4" fill="#10B981"/>
+      <text x="24" y="17" class="mono-text" font-size="11" fill="#E2E8F0">v1.0.0 Release</text>
+
+      <rect x="142" y="0" width="180" height="26" rx="13" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <circle cx="154" cy="13" r="4" fill="#3B82F6"/>
+      <text x="166" y="17" class="mono-text" font-size="11" fill="#E2E8F0">Zero External AI API</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- STAGE 1: LEFT PANEL - INPUT INGESTION -->
+  <!-- ============================================================ -->
+  <g transform="translate(50, 130)">
+    <!-- Container Card -->
+    <rect x="0" y="0" width="200" height="380" rx="12" fill="#131D2E" stroke="#1E293B" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect x="0" y="0" width="200" height="38" rx="12" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+    <text x="16" y="24" class="title-text" font-size="13" fill="#F8FAFC">INPUTS &amp; INTELLIGENCE</text>
+
+    <!-- Source 1: Project Specs & PRD -->
+    <g transform="translate(16, 55)">
+      <rect x="0" y="0" width="168" height="68" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <rect x="12" y="12" width="20" height="24" rx="3" fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="1.5"/>
+      <line x1="16" y1="18" x2="28" y2="18" stroke="#3B82F6" stroke-width="1.5"/>
+      <line x1="16" y1="23" x2="25" y2="23" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="40" y="24" class="title-text" font-size="12">Raw Project Docs</text>
+      <text x="40" y="42" class="body-text" font-size="10">PRDs, Specs, User Ideas</text>
+      <text x="40" y="56" class="mono-text" font-size="9" fill="#64748B">Unstructured / Fluid</text>
+    </g>
+
+    <!-- Source 2: AI Coding Agent (The Brain) -->
+    <g transform="translate(16, 140)">
+      <rect x="0" y="0" width="168" height="85" rx="8" fill="#1E293B" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.7"/>
+      <circle cx="24" cy="24" r="10" fill="#10B981" fill-opacity="0.2" stroke="#10B981" stroke-width="1.5"/>
+      <text x="21" y="28" class="mono-text" font-size="11" fill="#10B981">✦</text>
+      <text x="42" y="24" class="title-text" font-size="12">IDE Coding Agent</text>
+      <text x="42" y="40" class="mono-text" font-size="10" fill="#E2E8F0">Antigravity · Cursor</text>
+      <text x="42" y="54" class="mono-text" font-size="10" fill="#E2E8F0">Claude Code</text>
+      <rect x="12" y="62" width="144" height="16" rx="4" fill="#10B981" fill-opacity="0.12"/>
+      <text x="24" y="74" class="mono-text" font-size="9" fill="#10B981">IS THE ONLY INTELLIGENCE</text>
+    </g>
+
+    <!-- Source 3: Intake Protocol -->
+    <g transform="translate(16, 242)">
+      <rect x="0" y="0" width="168" height="115" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="22" class="title-text" font-size="11" fill="#F59E0B">BOOTSTRAP_INTAKE.md</text>
+      <text x="14" y="40" class="body-text" font-size="10">Step 1: Identify Stack</text>
+      <text x="14" y="56" class="body-text" font-size="10">Step 2: Macro Milestones</text>
+      <text x="14" y="72" class="body-text" font-size="10">Step 3: APIs &amp; C4 Models</text>
+      <text x="14" y="88" class="body-text" font-size="10">Step 4: Initial 2 Tasks</text>
+      <text x="14" y="104" class="mono-text" font-size="9" fill="#10B981">→ Hydrates .project-control</text>
+    </g>
+  </g>
+
+  <!-- Connectors from Input to Core Engine -->
+  <path d="M 250 200 L 290 200 L 290 290 L 320 290" fill="none" stroke="#10B981" stroke-width="2" marker-end="url(#arrowEmerald)"/>
+  <path d="M 250 320 L 280 320 L 280 310 L 320 310" fill="none" stroke="#3B82F6" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrowBlue)"/>
+
+  <!-- ============================================================ -->
+  <!-- STAGE 2: CENTER - PROJECTFLOW (`pf`) CORE KERNEL -->
+  <!-- ============================================================ -->
+  <g transform="translate(325, 130)">
+    <!-- Core Box -->
+    <rect x="0" y="0" width="235" height="380" rx="12" fill="#131E33" stroke="#10B981" stroke-width="2" filter="url(#cardShadow)"/>
+
+    <!-- Header Badge -->
+    <rect x="0" y="0" width="235" height="42" rx="12" fill="#1E293B" stroke="#10B981" stroke-width="1"/>
+    <circle cx="22" cy="21" r="5" fill="#10B981"/>
+    <text x="36" y="26" class="title-text" font-size="13" fill="#F8FAFC">.project-control/</text>
+    <text x="156" y="26" class="mono-text" font-size="10" fill="#10B981">CORE KERNEL</text>
+
+    <!-- Sub-Skills Orbit -->
+    <g transform="translate(14, 52)">
+      <rect x="0" y="0" width="207" height="66" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="18" class="title-text" font-size="10" fill="#94A3B8">BUILT-IN 5 SKILLS PACK</text>
+      <text x="12" y="34" class="mono-text" font-size="10" fill="#38BDF8">pf-spec-architect</text>
+      <text x="12" y="48" class="mono-text" font-size="10" fill="#34D399">pf-graph-choreographer</text>
+      <text x="120" y="34" class="mono-text" font-size="10" fill="#F472B6">pf-storyteller</text>
+      <text x="120" y="48" class="mono-text" font-size="10" fill="#FB7185">pf-drift-auditor</text>
+    </g>
+
+    <!-- Deterministic Context Bundler -->
+    <g transform="translate(14, 126)">
+      <rect x="0" y="0" width="207" height="116" rx="8" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5"/>
+      <rect x="12" y="10" width="183" height="22" rx="4" fill="#F59E0B" fill-opacity="0.15"/>
+      <text x="18" y="25" class="mono-text" font-size="10" fill="#F59E0B">🎯 Low-Token Bundler</text>
+      <text x="12" y="48" class="body-text" font-size="10">Filters 50k tokens down to:</text>
+      <rect x="12" y="56" width="183" height="34" rx="4" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+      <text x="18" y="70" class="mono-text" font-size="10" fill="#10B981">NEXT_TASK_PROMPT.md</text>
+      <text x="18" y="83" class="mono-text" font-size="9" fill="#94A3B8">~350 tokens (Zero Scope Creep)</text>
+      <text x="12" y="104" class="mono-text" font-size="9" fill="#F59E0B">npm run pf:prompt</text>
+    </g>
+
+    <!-- Two-Way Synchronization Engine -->
+    <g transform="translate(14, 250)">
+      <rect x="0" y="0" width="207" height="114" rx="8" fill="#1E293B" stroke="#3B82F6" stroke-width="1"/>
+      <text x="12" y="20" class="title-text" font-size="11" fill="#3B82F6">Two-Way Local Sync</text>
+      <text x="12" y="38" class="body-text" font-size="10">• REST API Server (`ui-server.mjs`)</text>
+      <text x="12" y="54" class="body-text" font-size="10">• Strict Zod Schemas Validation</text>
+      <text x="12" y="70" class="body-text" font-size="10">• Git Diff &amp; Task Completer</text>
+      <text x="12" y="86" class="body-text" font-size="10">• Rule Exporter (.cursorrules / Claude)</text>
+      <text x="12" y="102" class="mono-text" font-size="9" fill="#3B82F6">npm run pf:validate</text>
+    </g>
+  </g>
+
+  <!-- Connectors to Visual Graph Layers -->
+  <path d="M 560 190 L 610 190" fill="none" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <path d="M 560 270 L 610 270" fill="none" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <path d="M 560 350 L 610 350" fill="none" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <path d="M 560 430 L 610 430" fill="none" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- ============================================================ -->
+  <!-- STAGE 3: RIGHT PANEL - 5 SYNCHRONIZED GRAPH LAYERS -->
+  <!-- ============================================================ -->
+  <g transform="translate(615, 130)">
+    <!-- Container Card -->
+    <rect x="0" y="0" width="310" height="380" rx="12" fill="#131E33" stroke="#3B82F6" stroke-width="1.5" filter="url(#cardShadow)"/>
+
+    <!-- Header -->
+    <rect x="0" y="0" width="310" height="38" rx="12" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+    <text x="16" y="24" class="title-text" font-size="12" fill="#F8FAFC">5 SYNCHRONIZED VISUAL GRAPHS</text>
+    <rect x="220" y="8" width="80" height="22" rx="11" fill="#3B82F6" fill-opacity="0.2"/>
+    <text x="232" y="23" class="mono-text" font-size="9" fill="#60A5FA">React Flow</text>
+
+    <!-- Graph 1: Macro Roadmap -->
+    <g transform="translate(12, 48)">
+      <rect x="0" y="0" width="286" height="56" rx="6" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <rect x="8" y="8" width="6" height="40" rx="3" fill="#10B981"/>
+      <text x="22" y="22" class="title-text" font-size="11">1. Macro Roadmap Flow</text>
+      <text x="22" y="36" class="mono-text" font-size="9" fill="#64748B">roadmap.json</text>
+      <text x="22" y="48" class="body-text" font-size="9">Milestones M1 → M5, deliverables &amp; outcomes</text>
+    </g>
+
+    <!-- Graph 2: API & Architecture -->
+    <g transform="translate(12, 112)">
+      <rect x="0" y="0" width="286" height="56" rx="6" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <rect x="8" y="8" width="6" height="40" rx="3" fill="#3B82F6"/>
+      <text x="22" y="22" class="title-text" font-size="11">2. API &amp; Architecture Structure</text>
+      <text x="22" y="36" class="mono-text" font-size="9" fill="#64748B">architecture.json</text>
+      <text x="22" y="48" class="body-text" font-size="9">C4 Levels, REST Endpoints, Payloads, Rules</text>
+    </g>
+
+    <!-- Graph 3: Codebase Map & Drift -->
+    <g transform="translate(12, 176)">
+      <rect x="0" y="0" width="286" height="56" rx="6" fill="#1E293B" stroke="#F43F5E" stroke-width="1.2"/>
+      <rect x="8" y="8" width="6" height="40" rx="3" fill="#F43F5E"/>
+      <text x="22" y="22" class="title-text" font-size="11">3. Codebase Map &amp; Drift Monitor</text>
+      <text x="22" y="36" class="mono-text" font-size="9" fill="#F43F5E">codebase-map.json</text>
+      <text x="22" y="48" class="body-text" font-size="9">Intended vs. Observed file roles &amp; forbidden imports</text>
+    </g>
+
+    <!-- Graph 4: Rolling-Wave Horizon -->
+    <g transform="translate(12, 240)">
+      <rect x="0" y="0" width="286" height="56" rx="6" fill="#1E293B" stroke="#F59E0B" stroke-width="1.2"/>
+      <rect x="8" y="8" width="6" height="40" rx="3" fill="#F59E0B"/>
+      <text x="22" y="22" class="title-text" font-size="11">4. Rolling-Wave Horizon Tasks</text>
+      <text x="22" y="36" class="mono-text" font-size="9" fill="#F59E0B">state.json</text>
+      <text x="22" y="48" class="body-text" font-size="9">Immediate 1–3 concrete tasks (Never 100 upfront)</text>
+    </g>
+
+    <!-- Graph 5: Ideation Canvas -->
+    <g transform="translate(12, 304)">
+      <rect x="0" y="0" width="286" height="56" rx="6" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+      <rect x="8" y="8" width="6" height="40" rx="3" fill="#8B5CF6"/>
+      <text x="22" y="22" class="title-text" font-size="11">5. Ideation &amp; Architecture Canvas</text>
+      <text x="22" y="36" class="mono-text" font-size="9" fill="#8B5CF6">canvas.json</text>
+      <text x="22" y="48" class="body-text" font-size="9">Freeform sticky notes &amp; visual metaphor cards</text>
+    </g>
+  </g>
+
+  <!-- Connectors from Graphs to Studio & Drift Scanner -->
+  <path d="M 925 210 L 965 210" fill="none" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <path d="M 925 350 L 965 350" fill="none" stroke="#F43F5E" stroke-width="2" marker-end="url(#arrowRose)"/>
+
+  <!-- ============================================================ -->
+  <!-- STAGE 4: FAR RIGHT - STUDIO & DRIFT DETECTION GUARD -->
+  <!-- ============================================================ -->
+  <g transform="translate(970, 130)">
+    <!-- Top Card: Visual Control Studio -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="180" height="175" rx="10" fill="#1E293B" stroke="#3B82F6" stroke-width="1.5" filter="url(#cardShadow)"/>
+      <rect x="0" y="0" width="180" height="32" rx="10" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="20" class="title-text" font-size="11" fill="#60A5FA">Visual Control Studio</text>
+      <text x="12" y="50" class="mono-text" font-size="10" fill="#E2E8F0">http://localhost:4321</text>
+      <text x="12" y="70" class="body-text" font-size="10">• ELKjs Auto-Layout</text>
+      <text x="12" y="86" class="body-text" font-size="10">• Two-Way Inspector</text>
+      <text x="12" y="102" class="body-text" font-size="10">• Drag &amp; Drop Canvas</text>
+      <text x="12" y="118" class="body-text" font-size="10">• 1-Click Prompt Dock</text>
+      <rect x="12" y="132" width="156" height="24" rx="4" fill="#3B82F6" fill-opacity="0.2"/>
+      <text x="24" y="148" class="mono-text" font-size="10" fill="#60A5FA">npm run pf:ui</text>
+    </g>
+
+    <!-- Bottom Card: Architecture Drift Detector -->
+    <g transform="translate(0, 195)">
+      <rect x="0" y="0" width="180" height="185" rx="10" fill="#1E293B" stroke="#F43F5E" stroke-width="1.5" filter="url(#cardShadow)"/>
+      <rect x="0" y="0" width="180" height="32" rx="10" fill="#0F172A" stroke="#F43F5E" stroke-width="1"/>
+      <text x="12" y="20" class="title-text" font-size="11" fill="#F43F5E">🛡 Drift Scanner</text>
+      <text x="12" y="50" class="body-text" font-size="10">Multi-Language AST:</text>
+      <text x="12" y="66" class="mono-text" font-size="9" fill="#94A3B8">JS · TS · PY · GO · C</text>
+
+      <rect x="12" y="76" width="156" height="20" rx="3" fill="#F43F5E" fill-opacity="0.15"/>
+      <text x="18" y="90" class="mono-text" font-size="9" fill="#F43F5E">✖ Unregistered Files</text>
+
+      <rect x="12" y="100" width="156" height="20" rx="3" fill="#F43F5E" fill-opacity="0.15"/>
+      <text x="18" y="114" class="mono-text" font-size="9" fill="#F43F5E">✖ Layer Violations</text>
+
+      <rect x="12" y="124" width="156" height="20" rx="3" fill="#10B981" fill-opacity="0.15"/>
+      <text x="18" y="138" class="mono-text" font-size="9" fill="#10B981">✔ Auto-Fix &amp; Reconcile</text>
+
+      <rect x="12" y="150" width="156" height="22" rx="4" fill="#F43F5E" fill-opacity="0.2"/>
+      <text x="24" y="165" class="mono-text" font-size="10" fill="#F43F5E">npm run pf:scan</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM FEEDBACK LOOP: PROMPT TO AGENT -->
+  <!-- ============================================================ -->
+  <path d="M 440 520 L 440 560 L 150 560 L 150 520" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowEmerald)"/>
+  <rect x="235" y="546" width="220" height="26" rx="13" fill="#0F172A" stroke="#10B981" stroke-width="1.5"/>
+  <text x="248" y="563" class="mono-text" font-size="10" fill="#10B981">Autonomous Rolling-Wave Cycle</text>
+
+</svg>
