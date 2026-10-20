@@ -1,0 +1,104 @@
+@import '@xyflow/react/dist/style.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-app: #070d0a;
+  --bg-surface-1: #0d1712;
+  --bg-surface-2: #13221a;
+  --bg-surface-3: #1a2e24;
+  --bg-glass: rgba(19, 34, 26, 0.85);
+
+  --accent-primary: #10b981;
+  --accent-primary-hover: #34d399;
+  --accent-secondary: #059669;
+  --accent-subtle: rgba(16, 185, 129, 0.12);
+  --accent-glow: rgba(16, 185, 129, 0.28);
+
+  --text-primary: #ecfdf5;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  --border-subtle: rgba(16, 185, 129, 0.15);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-focus: #10b981;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #070d0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a2e24;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* React Flow Dark Canvas overrides */
+.react-flow__background {
+  background-color: #070d0a !important;
+}
+
+.react-flow__controls {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(16, 185, 129, 0.2) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  background: rgba(13, 23, 18, 0.9) !important;
+  backdrop-filter: blur(8px);
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  fill: #9ca3af !important;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(16, 185, 129, 0.15) !important;
+  fill: #10b981 !important;
+}
+
+.react-flow__edge-path {
+  stroke: #2e4d3d !important;
+  stroke-width: 2 !important;
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #10b981 !important;
+  stroke-width: 2.5 !important;
+  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.4));
+}
+
+.react-flow__edge-textbg {
+  fill: #0d1712 !important;
+  rx: 4px;
+}
+
+.react-flow__edge-text {
+  fill: #9ca3af !important;
+  font-size: 11px !important;
+  font-family: inherit !important;
+}
+
+.react-flow__handle {
+  width: 9px !important;
+  height: 9px !important;
+  background-color: #10b981 !important;
+  border: 2px solid #070d0a !important;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.react-flow__handle:hover {
+  transform: scale(1.35);
+  background-color: #34d399 !important;
+}

@@ -265,7 +265,8 @@ export const ActivityEntrySchema = z.object({
     "commit",
     "milestone_progress",
     "bootstrap",
-    "reset"
+    "reset",
+    "state_update"
   ]),
   taskId: z.string().optional(),
   milestoneId: z.string().optional(),

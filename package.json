@@ -17,7 +17,9 @@
     "pf:status": "node scripts/pf-cli.mjs status",
     "pf:prompt": "node scripts/pf-cli.mjs prompt",
     "pf:complete": "node scripts/pf-cli.mjs complete",
-    "pf:sync-rules": "node scripts/pf-cli.mjs sync-rules"
+    "pf:sync-rules": "node scripts/pf-cli.mjs sync-rules",
+    "pf:ui": "node scripts/ui-server.mjs",
+    "pf:ui:demo": "node scripts/ui-server.mjs --demo"
   },
   "keywords": [
     "project-flow",
