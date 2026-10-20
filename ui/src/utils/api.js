@@ -60,3 +60,17 @@ export async function resetControlState() {
   }
   return res.json();
 }
+
+export async function scanCodebase(autoFix = false, isDemo = false) {
+  const url = `${API_BASE}/scan${isDemo ? '?demo=true' : ''}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ autoFix })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Failed to scan codebase: ${res.statusText}`);
+  }
+  return res.json();
+}

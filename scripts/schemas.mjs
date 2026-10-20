@@ -118,8 +118,10 @@ export const CodebaseEntrySchema = z.object({
   relatedApiIds: z.array(z.string()).default([]),
   lastModifiedByTask: z.string().optional(),
   dependencies: z.array(z.string()).default([]),
-  status: z.enum(["active", "deprecated", "planned"]).default("active")
-});
+  status: z.enum(["active", "deprecated", "planned"]).default("active"),
+  driftDetected: z.boolean().optional(),
+  driftReason: z.string().optional()
+}).passthrough();
 
 export const CodebaseMapSchema = z.object({
   $schema: z.string().optional(),

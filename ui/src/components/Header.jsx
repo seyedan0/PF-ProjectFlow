@@ -7,7 +7,8 @@ import {
   RefreshCw,
   FolderGit2,
   FileCheck2,
-  RotateCcw
+  RotateCcw,
+  Radar
 } from 'lucide-react';
 
 export function Header({ 
@@ -19,6 +20,8 @@ export function Header({
   onToggleDemo, 
   onAutoLayout, 
   onRefresh,
+  onScanCodebase,
+  scanning,
   loading 
 }) {
   const isInitialized = Boolean(state?.initialized);
@@ -105,6 +108,16 @@ export function Header({
 
       {/* Action Buttons */}
       <div className="flex items-center gap-2">
+        <button
+          onClick={onScanCodebase}
+          disabled={scanning}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-obsidian-800 hover:bg-obsidian-700 text-amber-200 border border-amber-500/30 hover:border-amber-400/50 text-xs font-medium transition-all shadow-sm disabled:opacity-50"
+          title="Scan physical codebase and detect architecture drift"
+        >
+          <Radar className={`w-3.5 h-3.5 text-amber-400 ${scanning ? 'animate-spin' : ''}`} />
+          <span>{scanning ? 'Scanning...' : 'Scan Drift'}</span>
+        </button>
+
         <button
           onClick={onAutoLayout}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-obsidian-800 hover:bg-obsidian-700 text-slate-200 border border-white/10 hover:border-emerald-500/30 text-xs font-medium transition-all shadow-sm"

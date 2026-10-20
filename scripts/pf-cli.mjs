@@ -578,6 +578,18 @@ switch (command) {
     handleSyncRules();
     break;
 
+  case "scan": {
+    const scanArgs = args.slice(1).join(" ");
+    execSync(`node scripts/pf-scan.mjs ${scanArgs}`, { stdio: "inherit", cwd: projectRoot });
+    break;
+  }
+
+  case "install": {
+    const installArgs = args.slice(1).join(" ");
+    execSync(`node scripts/pf-install.mjs ${installArgs}`, { stdio: "inherit", cwd: projectRoot });
+    break;
+  }
+
   case "--help":
   case "-h":
   default:
@@ -589,6 +601,8 @@ switch (command) {
     console.log(`  ${colors.bold}prompt [taskId]${colors.reset}         Compile focused task prompt to NEXT_TASK_PROMPT.md`);
     console.log(`  ${colors.bold}complete <taskId> --summary "..."${colors.reset} Complete task and log work history`);
     console.log(`  ${colors.bold}sync-rules${colors.reset}              Export architectural rules to Antigravity, Cursor, and Claude`);
+    console.log(`  ${colors.bold}scan [targetDir]${colors.reset}        Scan codebase files, imports, and detect architectural drift`);
+    console.log(`  ${colors.bold}install <targetDir>${colors.reset}     Install ProjectFlow into any target project`);
     console.log(`  ${colors.bold}--help, -h${colors.reset}              Show this help menu\n`);
     break;
 }

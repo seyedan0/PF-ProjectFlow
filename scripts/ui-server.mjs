@@ -11,6 +11,7 @@ import {
   StateSchema,
   CanvasSchema
 } from "./schemas.mjs";
+import { runCodebaseScan } from "./pf-scan.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -393,6 +394,27 @@ const server = http.createServer(async (req, res) => {
     try {
       execSync("node scripts/pf-cli.mjs reset", { cwd: projectRoot, encoding: "utf-8" });
       return sendJson(res, 200, { success: true, message: "Reset .project-control to clean, blank skeleton template." });
+    } catch (err) {
+      return sendJson(res, 500, { error: err.message });
+    }
+  }
+
+  // 6. POST /api/pf/scan
+  if (pathname === "/api/pf/scan" && req.method === "POST") {
+    try {
+      const body = await parseBody(req);
+      const scanTarget = isDemo ? demoDir : projectRoot;
+      const summary = await runCodebaseScan({
+        targetDir: scanTarget,
+        isDemo,
+        autoFix: Boolean(body.autoFix),
+        controlDir: targetDir
+      });
+
+      return sendJson(res, 200, {
+        success: true,
+        summary
+      });
     } catch (err) {
       return sendJson(res, 500, { error: err.message });
     }

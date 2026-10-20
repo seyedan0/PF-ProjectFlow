@@ -33,7 +33,8 @@ import {
   saveProjectFile, 
   bundlePrompt, 
   syncRules, 
-  resetControlState 
+  resetControlState,
+  scanCodebase 
 } from './utils/api.js';
 import { getLayoutedElements } from './utils/layout.js';
 
@@ -66,6 +67,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('roadmap');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   // React Flow state
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -618,6 +620,22 @@ export default function App() {
     }
   };
 
+  // Trigger Codebase Scan & Drift Audit
+  const handleScanCodebase = async () => {
+    setScanning(true);
+    try {
+      const res = await scanCodebase(false, isDemo);
+      const s = res.summary;
+      await loadState(isDemo);
+      setActiveTab('codebase');
+      alert(`Codebase Scan Complete!\n• Scanned: ${s.filesScanned} source files\n• Unregistered: ${s.unregisteredFiles.length}\n• Missing: ${s.missingFiles.length}\n• Drift Issues: ${s.driftViolations.length}\n\nCodebase map has been updated.`);
+    } catch (err) {
+      alert(`Scanner error: ${err.message}`);
+    } finally {
+      setScanning(false);
+    }
+  };
+
   // Tab Badge counts
   const counts = useMemo(() => ({
     roadmap: rawData.roadmap?.milestones?.length || 0,
@@ -639,6 +657,8 @@ export default function App() {
         onToggleDemo={handleToggleDemo}
         onAutoLayout={() => applyLayoutAndSet(activeTab, rawData)}
         onRefresh={() => loadState(isDemo)}
+        onScanCodebase={handleScanCodebase}
+        scanning={scanning}
         loading={loading}
       />
 
