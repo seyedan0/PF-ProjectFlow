@@ -6,7 +6,12 @@
   "main": "scripts/validate-control.mjs",
   "scripts": {
     "validate": "node scripts/validate-control.mjs",
-    "test": "node scripts/validate-control.mjs"
+    "test": "node scripts/validate-control.mjs",
+    "vibe": "node scripts/vibe-cli.mjs",
+    "vibe:status": "node scripts/vibe-cli.mjs status",
+    "vibe:prompt": "node scripts/vibe-cli.mjs prompt",
+    "vibe:complete": "node scripts/vibe-cli.mjs complete",
+    "vibe:sync-rules": "node scripts/vibe-cli.mjs sync-rules"
   },
   "keywords": [
     "vibe-coding",
