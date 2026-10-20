@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://vibe-control.dev/schemas/codebase-map.schema.json",
-  "title": "VibeControl Codebase Map",
-  "description": "Registry of observed files, folders, intended vs observed responsibilities, and link to architectural modules/tasks",
+  "$id": "https://project-flow.dev/schemas/codebase-map.schema.json",
+  "title": "ProjectFlow Codebase Map",
+  "description": "Registry of observed files, folders, intended vs observed responsibilities, and module linkages",
   "type": "object",
-  "required": ["version", "root", "layers", "files"],
+  "required": ["version"],
   "properties": {
     "$schema": { "type": "string" },
     "version": { "type": "string" },
@@ -13,52 +13,14 @@
       "type": "array",
       "items": { "type": "string" }
     },
+    "entries": {
+      "type": "array"
+    },
     "files": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "required": [
-          "path",
-          "type",
-          "role",
-          "layer",
-          "intendedResponsibility",
-          "observedResponsibility",
-          "lastModifiedByTask",
-          "status"
-        ],
-        "properties": {
-          "path": { "type": "string" },
-          "type": {
-            "type": "string",
-            "enum": ["file", "directory"]
-          },
-          "role": { "type": "string" },
-          "layer": { "type": "string" },
-          "intendedResponsibility": { "type": "string" },
-          "observedResponsibility": { "type": "string" },
-          "relatedModuleIds": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "relatedApiIds": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "lastModifiedByTask": { "type": "string" },
-          "dependencies": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "status": {
-            "type": "string",
-            "enum": ["active", "deprecated", "planned"]
-          }
-        },
-        "additionalProperties": false
-      }
+      "type": "array"
+    },
+    "dependencies": {
+      "type": "array"
     }
-  },
-  "additionalProperties": false
+  }
 }

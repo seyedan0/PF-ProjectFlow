@@ -1,0 +1,33 @@
+{
+  "$schema": "../../.project-control/schemas/canvas.schema.json",
+  "version": "1.0.0",
+  "viewport": { "x": 0, "y": 0, "zoom": 1 },
+  "nodes": [
+    {
+      "id": "node-m1",
+      "type": "milestoneNode",
+      "position": { "x": 100, "y": 150 },
+      "data": {
+        "label": "M1: Auth & Task Core",
+        "referencedEntity": { "type": "milestone", "id": "M1" }
+      }
+    },
+    {
+      "id": "node-m2",
+      "type": "milestoneNode",
+      "position": { "x": 450, "y": 150 },
+      "data": {
+        "label": "M2: Kanban Board UI",
+        "referencedEntity": { "type": "milestone", "id": "M2" }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1-2",
+      "source": "node-m1",
+      "target": "node-m2",
+      "animated": true
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "../../.project-control/schemas/codebase-map.schema.json",
+  "version": "1.0.0",
+  "root": ".",
+  "layers": ["core", "server", "ui", "config"],
+  "entries": [
+    {
+      "path": "src/auth/service.js",
+      "type": "file",
+      "role": "Authentication service handling JWT and passwords",
+      "layer": "core",
+      "intendedResponsibility": "Bcrypt password hashing and token generation",
+      "observedResponsibility": "Auth service logic",
+      "relatedModuleIds": ["MOD-AUTH"],
+      "relatedApiIds": ["API-AUTH-LOGIN"],
+      "status": "planned"
+    },
+    {
+      "path": "src/auth/routes.js",
+      "type": "file",
+      "role": "Fastify route handlers for authentication",
+      "layer": "server",
+      "intendedResponsibility": "Exposes /api/auth endpoints",
+      "observedResponsibility": "Route declarations",
+      "relatedModuleIds": ["MOD-AUTH"],
+      "relatedApiIds": ["API-AUTH-LOGIN"],
+      "status": "planned"
+    }
+  ],
+  "dependencies": []
+}

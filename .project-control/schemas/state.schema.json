@@ -1,104 +1,36 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://vibe-control.dev/schemas/state.schema.json",
-  "title": "VibeControl State",
-  "description": "Rolling-wave execution state, project proposal, tech stack, completed work summary, and active horizon tasks",
+  "$id": "https://project-flow.dev/schemas/state.schema.json",
+  "title": "ProjectFlow State",
+  "description": "Rolling-wave execution state, project proposal, tech stack, completed tasks, and active tasks",
   "type": "object",
-  "required": ["version", "project", "activeMilestoneId", "completedWorkSummary", "activeHorizonTasks"],
+  "required": ["version"],
   "properties": {
     "$schema": { "type": "string" },
     "version": { "type": "string" },
-    "project": {
-      "type": "object",
-      "required": ["id", "name", "tagline", "proposalSummary", "techStack"],
-      "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "tagline": { "type": "string" },
-        "proposalSummary": { "type": "string" },
-        "techStack": {
-          "type": "object",
-          "required": ["core", "backend", "frontend", "tools"],
-          "properties": {
-            "core": { "type": "array", "items": { "type": "string" } },
-            "backend": { "type": "array", "items": { "type": "string" } },
-            "frontend": { "type": "array", "items": { "type": "string" } },
-            "tools": { "type": "array", "items": { "type": "string" } }
-          },
-          "additionalProperties": false
-        }
-      },
-      "additionalProperties": false
+    "initialized": { "type": "boolean" },
+    "projectName": { "type": "string" },
+    "proposalSummary": { "type": "string" },
+    "techStack": {
+      "type": ["array", "object"]
     },
     "activeMilestoneId": {
-      "type": "string",
-      "pattern": "^[A-Za-z0-9_-]+$"
+      "type": ["string", "null"]
+    },
+    "completedTasks": {
+      "type": "array"
+    },
+    "activeTasks": {
+      "type": "array"
+    },
+    "project": {
+      "type": "object"
     },
     "completedWorkSummary": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["taskId", "milestoneId", "title", "completedAt", "summary"],
-        "properties": {
-          "taskId": { "type": "string" },
-          "milestoneId": { "type": "string" },
-          "title": { "type": "string" },
-          "completedAt": { "type": "string" },
-          "summary": { "type": "string" }
-        },
-        "additionalProperties": false
-      }
+      "type": "array"
     },
     "activeHorizonTasks": {
-      "type": "array",
-      "minItems": 1,
-      "maxItems": 5,
-      "items": {
-        "type": "object",
-        "required": [
-          "id",
-          "milestoneId",
-          "moduleId",
-          "title",
-          "description",
-          "status",
-          "order",
-          "acceptanceCriteria"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[A-Za-z0-9_-]+$"
-          },
-          "milestoneId": { "type": "string" },
-          "moduleId": { "type": "string" },
-          "relatedApiIds": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "title": { "type": "string" },
-          "description": { "type": "string" },
-          "status": {
-            "type": "string",
-            "enum": ["planned", "ready", "in_progress", "review", "done"]
-          },
-          "order": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "acceptanceCriteria": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "assignedFiles": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "notes": { "type": "string" }
-        },
-        "additionalProperties": false
-      }
+      "type": "array"
     }
-  },
-  "additionalProperties": false
+  }
 }

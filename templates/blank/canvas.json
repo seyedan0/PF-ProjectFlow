@@ -1,0 +1,11 @@
+{
+  "$schema": "../../.project-control/schemas/canvas.schema.json",
+  "version": "1.0.0",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "nodes": [],
+  "edges": []
+}

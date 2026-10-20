@@ -1,17 +1,11 @@
-# Cursor AI Architecture & Workflow Rules for VibeControl
+# Cursor AI Architecture & Workflow Rules for Target Project
 
-You are developing VibeControl (Visual Architecture, Codebase Intelligence & Rolling-Wave Control for Vibe Coding).
+You are developing Target Project (Custom project managed via ProjectFlow.).
 
 ### Core Directives:
-1. **Never guess the task**: Check `.project-control/NEXT_TASK_PROMPT.md` for the active task requirements and acceptance criteria.
-2. **Single Source of Truth**: Architecture, API contracts, and modules are defined in `.project-control/architecture.json`.
-3. **Codebase Observability**: Every new or modified file must be registered in `.project-control/codebase-map.json` with its exact role and layer.
-4. **Validation Check**: Run `npm run validate` before finishing to ensure 0 errors.
-5. **Finish Task**: Use `npm run vibe:complete <taskId> -- --summary "..."` to archive progress.
+1. **Check Task Context**: Read `.project-control/NEXT_TASK_PROMPT.md` before coding.
+2. **Single Source of Truth**: Modules & APIs are defined in `.project-control/architecture.json`.
+3. **Register Files**: Every new or modified file must be registered in `.project-control/codebase-map.json`.
+4. **Validation Check**: Run `npm run pf:validate` to ensure 0 errors.
+5. **Finish Task**: Use `npm run pf:complete <taskId> -- --summary "..."` when done.
 
-### Architectural Guardrails:
-- **RULE-SSOT**: All architectural decisions, APIs, and roadmap items must be recorded in .project-control JSON files before or concurrent with implementation.
-- **RULE-CROSS-REF-INTEGRITY**: Any milestoneId, moduleId, or apiId referenced in tasks, codebase-map, or canvas must correspond to an existing entity in roadmap or architecture.
-- **RULE-ROLLING-WAVE**: The active horizon tasks in state.json must strictly contain between 1 and 3 concrete tasks (max 5) to prevent cognitive overload and stale backlog debt.
-- **RULE-DRIFT-GATE**: Every repository source and script file must have a registered entry in codebase-map.json detailing its role, layer, and linked module.
-- **RULE-APPEND-ONLY-AUDIT**: activity.jsonl must strictly be appended to; historical entries must not be mutated or deleted to preserve auditability.

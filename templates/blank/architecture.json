@@ -1,0 +1,9 @@
+{
+  "$schema": "../../.project-control/schemas/architecture.schema.json",
+  "version": "1.0.0",
+  "modules": [],
+  "apis": [],
+  "dataModels": [],
+  "rules": [],
+  "edges": []
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "../../.project-control/schemas/state.schema.json",
+  "version": "1.0.0",
+  "initialized": true,
+  "projectName": "TaskForge",
+  "proposalSummary": "Modern collaborative task management workspace with visual Kanban and real-time updates.",
+  "techStack": [
+    "Node.js",
+    "Fastify",
+    "React",
+    "PostgreSQL"
+  ],
+  "activeMilestoneId": "M1",
+  "completedTasks": [],
+  "activeTasks": [
+    {
+      "id": "TASK-01",
+      "milestoneId": "M1",
+      "moduleId": "MOD-AUTH",
+      "relatedApiIds": ["API-AUTH-LOGIN"],
+      "title": "User Authentication & JWT Tokens",
+      "description": "Implement user signup, login, and JWT token issuance with bcrypt password hashing.",
+      "status": "in_progress",
+      "order": 1,
+      "acceptanceCriteria": [
+        "POST /api/auth/register creates user",
+        "POST /api/auth/login returns JWT bearer token",
+        "Unit tests pass for auth service"
+      ],
+      "assignedFiles": [
+        "src/auth/service.js",
+        "src/auth/routes.js"
+      ]
+    }
+  ]
+}

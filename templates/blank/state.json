@@ -1,0 +1,11 @@
+{
+  "$schema": "../../.project-control/schemas/state.schema.json",
+  "version": "1.0.0",
+  "initialized": false,
+  "projectName": "",
+  "proposalSummary": "",
+  "techStack": [],
+  "activeMilestoneId": null,
+  "completedTasks": [],
+  "activeTasks": []
+}

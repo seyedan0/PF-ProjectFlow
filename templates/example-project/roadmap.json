@@ -1,0 +1,42 @@
+{
+  "$schema": "../../.project-control/schemas/roadmap.schema.json",
+  "version": "1.0.0",
+  "projectId": "taskforge",
+  "projectName": "TaskForge",
+  "milestones": [
+    {
+      "id": "M1",
+      "title": "Auth & Task Data Core",
+      "description": "User registration, authentication, database migrations, and basic task CRUD.",
+      "targetOutcome": "Functional REST API capable of user auth and task management.",
+      "status": "in_progress",
+      "order": 1,
+      "dependencies": [],
+      "deliverables": [
+        "Auth service & routes",
+        "Task repository & controllers"
+      ]
+    },
+    {
+      "id": "M2",
+      "title": "Interactive Kanban Board UI",
+      "description": "React-based drag-and-drop Kanban board with column state transitions.",
+      "targetOutcome": "Developers can drag cards between To Do, Doing, and Done.",
+      "status": "planned",
+      "order": 2,
+      "dependencies": ["M1"],
+      "deliverables": [
+        "Vite frontend app",
+        "Kanban column components"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-m1-m2",
+      "source": "M1",
+      "target": "M2",
+      "label": "API readiness"
+    }
+  ]
+}

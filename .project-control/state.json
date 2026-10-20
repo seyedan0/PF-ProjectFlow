@@ -1,98 +1,11 @@
 {
-  "$schema": "./schemas/state.schema.json",
+  "$schema": "../../.project-control/schemas/state.schema.json",
   "version": "1.0.0",
-  "project": {
-    "id": "vibe-control",
-    "name": "VibeControl",
-    "tagline": "Visual Architecture, Codebase Intelligence & Rolling-Wave Control for Vibe Coding",
-    "proposalSummary": "VibeControl replaces static markdown task plans and chaotic chat sessions with an active multi-graph repository control system. It provides an embedded Single Source of Truth (.project-control), an interactive React Flow dashboard, zero-drift codebase intelligence, and rolling-wave prompt compilation for AI coding agents.",
-    "techStack": {
-      "core": [
-        "Node.js (ESM)",
-        "Zod",
-        "JSON Schema"
-      ],
-      "backend": [
-        "Node HTTP / Fastify (local)"
-      ],
-      "frontend": [
-        "React 19 / Vite",
-        "@xyflow/react (React Flow)",
-        "Tailwind CSS / Lucide"
-      ],
-      "tools": [
-        "Git",
-        "TypeScript / JSDoc",
-        "npm"
-      ]
-    }
-  },
-  "activeMilestoneId": "M2",
-  "completedWorkSummary": [
-    {
-      "taskId": "TASK-01",
-      "milestoneId": "M1",
-      "title": "Core Data Schemas, Multi-Graph State & Validator",
-      "completedAt": "2026-10-20T00:20:45.728Z",
-      "summary": "Created core schemas and bootstrap data"
-    },
-    {
-      "taskId": "TASK-02",
-      "milestoneId": "M1",
-      "title": "Low-Token Context Compiler, Task Finisher & Multi-Agent Rule Exporter",
-      "completedAt": "2026-10-20T00:21:19.078Z",
-      "summary": "Built vibe-cli context compiler and rule exporter"
-    }
-  ],
-  "activeHorizonTasks": [
-    {
-      "id": "TASK-03",
-      "milestoneId": "M2",
-      "moduleId": "MOD-SERVER",
-      "relatedApiIds": [
-        "API-PROJECT-STATE-GET",
-        "API-PROJECT-STATE-POST"
-      ],
-      "title": "Local Bridge & REST Server with Atomic Two-Way Sync",
-      "description": "Implement lightweight local HTTP server serving GET/POST /api/project-state with filesystem debouncing, schema validation, and activity logging.",
-      "status": "in_progress",
-      "order": 3,
-      "acceptanceCriteria": [
-        "Local server running on port 4321 with CORS support for Vite dev server",
-        "GET /api/project-state returns consolidated multi-layer graph state",
-        "POST /api/project-state validates payload with Zod schemas and saves to .project-control/",
-        "State mutations write an event to activity.jsonl and broadcast to SSE/WebSocket clients"
-      ],
-      "assignedFiles": [
-        "server/index.mjs",
-        "server/routes.mjs"
-      ],
-      "notes": "Core backend bridge enabling bidirectional React Flow UI synchronization"
-    },
-    {
-      "id": "TASK-04",
-      "milestoneId": "M2",
-      "moduleId": "MOD-UI",
-      "relatedApiIds": [
-        "API-PROJECT-STATE-GET",
-        "API-PROJECT-STATE-POST"
-      ],
-      "title": "Multi-Graph React Flow UI Canvas & Custom Nodes",
-      "description": "Scaffold Vite + React application with @xyflow/react rendering interactive multi-graph canvas with custom nodes for Milestones, Modules, APIs, Tasks, and Ideation Sticky Notes.",
-      "status": "ready",
-      "order": 4,
-      "acceptanceCriteria": [
-        "Vite + React 19 app scaffolded in ui/ folder",
-        "Interactive multi-graph canvas with tabbed switching between Roadmap, Architecture, and Ideation views",
-        "Custom styled React Flow node components with dark-mode aesthetic and status badges",
-        "Node repositioning and edits persist back to local server via POST /api/project-state"
-      ],
-      "assignedFiles": [
-        "ui/package.json",
-        "ui/src/App.jsx",
-        "ui/src/components/FlowCanvas.jsx"
-      ],
-      "notes": "Visual interactive control plane for human developers and vibe coding oversight"
-    }
-  ]
+  "initialized": false,
+  "projectName": "",
+  "proposalSummary": "",
+  "techStack": [],
+  "activeMilestoneId": null,
+  "completedTasks": [],
+  "activeTasks": []
 }

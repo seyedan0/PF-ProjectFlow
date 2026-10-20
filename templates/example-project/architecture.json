@@ -1,0 +1,95 @@
+{
+  "$schema": "../../.project-control/schemas/architecture.schema.json",
+  "version": "1.0.0",
+  "systemOverview": "TaskForge backend is a Fastify microservice using PostgreSQL, with a React single-page frontend.",
+  "modules": [
+    {
+      "id": "MOD-AUTH",
+      "name": "Authentication & Session Module",
+      "description": "User registration, password encryption, and JWT validation.",
+      "layer": "core",
+      "responsibilities": [
+        "Hash passwords using bcrypt",
+        "Generate and verify JWT bearer tokens"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "MOD-TASKS",
+      "name": "Task & Board Module",
+      "description": "Task creation, column transitions, and status updates.",
+      "layer": "core",
+      "responsibilities": [
+        "CRUD operations on tasks table",
+        "Validate task ownership"
+      ],
+      "dependencies": ["MOD-AUTH"]
+    }
+  ],
+  "apis": [
+    {
+      "id": "API-AUTH-LOGIN",
+      "moduleId": "MOD-AUTH",
+      "milestoneId": "M1",
+      "name": "User Login",
+      "endpoint": "/api/auth/login",
+      "method": "POST",
+      "description": "Validates email and password, returning JWT access token.",
+      "requestPayload": { "email": "user@example.com", "password": "securePassword123" },
+      "responsePayload": { "token": "string", "expiresIn": 3600 }
+    },
+    {
+      "id": "API-TASKS-LIST",
+      "moduleId": "MOD-TASKS",
+      "milestoneId": "M1",
+      "name": "List User Tasks",
+      "endpoint": "/api/tasks",
+      "method": "GET",
+      "description": "Fetches all tasks belonging to authenticated user.",
+      "requestPayload": null,
+      "responsePayload": { "tasks": "Task[]" }
+    }
+  ],
+  "dataModels": [
+    {
+      "id": "MODEL-USER",
+      "name": "User Entity",
+      "description": "User account and profile credentials.",
+      "moduleId": "MOD-AUTH",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true, "description": "Primary Key" },
+        { "name": "email", "type": "string", "required": true, "description": "Unique email address" },
+        { "name": "passwordHash", "type": "string", "required": true, "description": "Bcrypt hashed password" }
+      ]
+    },
+    {
+      "id": "MODEL-TASK",
+      "name": "Task Entity",
+      "description": "Task item with title, status, and board assignment.",
+      "moduleId": "MOD-TASKS",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true, "description": "Primary Key" },
+        { "name": "title", "type": "string", "required": true, "description": "Task summary" },
+        { "name": "status", "type": "string", "required": true, "description": "todo | doing | done" }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "RULE-AUTH-REQUIRED",
+      "title": "All Task Endpoints Require JWT",
+      "category": "security",
+      "rule": "Every route under /api/tasks/* must authenticate requests via the preHandler JWT hook.",
+      "severity": "error",
+      "enforcedBy": "fastify-jwt"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-tasks-auth",
+      "source": "MOD-TASKS",
+      "target": "MOD-AUTH",
+      "label": "depends on"
+    }
+  ]
+}

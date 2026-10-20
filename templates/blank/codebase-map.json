@@ -1,0 +1,14 @@
+{
+  "$schema": "../../.project-control/schemas/codebase-map.schema.json",
+  "version": "1.0.0",
+  "root": ".",
+  "layers": [
+    "core",
+    "cli",
+    "server",
+    "ui",
+    "config"
+  ],
+  "entries": [],
+  "dependencies": []
+}
