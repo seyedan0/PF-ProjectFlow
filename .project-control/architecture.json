@@ -1,0 +1,263 @@
+{
+  "$schema": "./schemas/architecture.schema.json",
+  "version": "1.0.0",
+  "systemOverview": "VibeControl is an autonomous, local-first visual architecture and rolling-wave project control system. It maintains a dual-layer representation: a graph-based Single Source of Truth in `.project-control/` and an interactive local React Flow dashboard bridged via local Node.js APIs.",
+  "modules": [
+    {
+      "id": "MOD-CORE",
+      "name": "Core State & Schema Engine",
+      "description": "Single-source-of-truth file reader, writer, and JSON/Zod schemas for .project-control graphs.",
+      "layer": "core",
+      "responsibilities": [
+        "Parse and validate roadmap, architecture, state, codebase-map, canvas, and activity files",
+        "Ensure atomic read/write operations to avoid partial writes",
+        "Expose schema definitions for CLI and UI"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "MOD-VALIDATOR",
+      "name": "Integrity & Cross-Reference Validator",
+      "description": "Checks graph integrity, cross-referenced ID consistency, file existence, and architectural constraints.",
+      "layer": "cli",
+      "responsibilities": [
+        "Validate JSON schemas against Zod models",
+        "Verify referential integrity across milestones, modules, APIs, and tasks",
+        "Verify physical existence of files listed in codebase-map.json",
+        "Emit colored CLI diagnostic reports"
+      ],
+      "dependencies": ["MOD-CORE"]
+    },
+    {
+      "id": "MOD-CONTEXT",
+      "name": "Agent Context Compiler",
+      "description": "Compiles tailored prompt context for coding agents based on active horizon tasks, architectural rules, and related APIs.",
+      "layer": "core",
+      "responsibilities": [
+        "Assemble concise, high-signal system prompts for the active task",
+        "Filter relevant module and API contracts to stay within context windows",
+        "Emit ready-to-paste or piped context for AI coding assistants"
+      ],
+      "dependencies": ["MOD-CORE"]
+    },
+    {
+      "id": "MOD-SERVER",
+      "name": "Local Bridge & REST Server",
+      "description": "Lightweight local HTTP/WebSocket server bridging the React Flow UI with the local filesystem .project-control repository.",
+      "layer": "server",
+      "responsibilities": [
+        "Serve REST API endpoints for GET/POST /api/project-state",
+        "Handle POST /api/compile-prompt and POST /api/complete-task",
+        "Broadcast file changes to connected UI clients"
+      ],
+      "dependencies": ["MOD-CORE", "MOD-CONTEXT"]
+    },
+    {
+      "id": "MOD-UI",
+      "name": "Multi-Graph React Flow UI",
+      "description": "Visual workspace for viewing and editing roadmaps, architectural graphs, rolling waves, and ideation sticky notes.",
+      "layer": "ui",
+      "responsibilities": [
+        "Render React Flow canvas with custom node types",
+        "Provide interactive drag-and-drop node editing and edge linking",
+        "Persist canvas coordinates and state changes back to server"
+      ],
+      "dependencies": ["MOD-SERVER"]
+    },
+    {
+      "id": "MOD-SCANNER",
+      "name": "Codebase Scanner & Drift Auditor",
+      "description": "Inspects repository filesystem, imports, and AST to update codebase-map.json and alert on architectural drift.",
+      "layer": "scanner",
+      "responsibilities": [
+        "Scan project files and detect real module dependencies",
+        "Detect undeclared files and architectural boundary violations",
+        "Generate drift score and remediation recommendations"
+      ],
+      "dependencies": ["MOD-CORE"]
+    }
+  ],
+  "apis": [
+    {
+      "id": "API-PROJECT-STATE-GET",
+      "moduleId": "MOD-SERVER",
+      "name": "Get Consolidated Project State",
+      "endpoint": "/api/project-state",
+      "method": "GET",
+      "description": "Retrieves the complete state including roadmap, architecture, codebase map, state, canvas, and activity log.",
+      "requestPayload": null,
+      "responsePayload": {
+        "roadmap": "RoadmapObject",
+        "architecture": "ArchitectureObject",
+        "codebaseMap": "CodebaseMapObject",
+        "state": "StateObject",
+        "canvas": "CanvasObject"
+      }
+    },
+    {
+      "id": "API-PROJECT-STATE-POST",
+      "moduleId": "MOD-SERVER",
+      "name": "Update Project State Entity",
+      "endpoint": "/api/project-state",
+      "method": "POST",
+      "description": "Updates graph entities, node positions, or task statuses, writes atomically to .project-control/ and appends to activity log.",
+      "requestPayload": {
+        "file": "string (roadmap|architecture|codebase-map|state|canvas)",
+        "data": "object"
+      },
+      "responsePayload": {
+        "success": true,
+        "updatedFile": "string",
+        "timestamp": "string"
+      }
+    },
+    {
+      "id": "API-COMPILE-PROMPT",
+      "moduleId": "MOD-SERVER",
+      "name": "Compile Agent Prompt Context",
+      "endpoint": "/api/compile-prompt",
+      "method": "POST",
+      "description": "Generates a structured prompt context containing active task details, linked API contracts, architectural rules, and file roles.",
+      "requestPayload": {
+        "taskId": "string"
+      },
+      "responsePayload": {
+        "taskId": "string",
+        "systemPrompt": "string",
+        "userPrompt": "string",
+        "tokenEstimate": 1500
+      }
+    },
+    {
+      "id": "API-COMPLETE-TASK",
+      "moduleId": "MOD-SERVER",
+      "name": "Complete Task & Advance Rolling Wave",
+      "endpoint": "/api/complete-task",
+      "method": "POST",
+      "description": "Marks active task as done, archives to completedWorkSummary, logs to activity.jsonl, and prepares next horizon task.",
+      "requestPayload": {
+        "taskId": "string",
+        "summary": "string",
+        "filesChanged": ["string"]
+      },
+      "responsePayload": {
+        "success": true,
+        "completedTaskId": "string",
+        "nextActiveTaskId": "string"
+      }
+    }
+  ],
+  "dataModels": [
+    {
+      "id": "MODEL-ROADMAP",
+      "name": "Roadmap Model",
+      "description": "Macro milestones, status, dependencies, and deliverables.",
+      "moduleId": "MOD-CORE",
+      "fields": [
+        { "name": "id", "type": "string", "required": true, "description": "Unique milestone identifier" },
+        { "name": "title", "type": "string", "required": true, "description": "Human-readable milestone name" },
+        { "name": "status", "type": "string", "required": true, "description": "Milestone execution status" },
+        { "name": "dependencies", "type": "string[]", "required": false, "description": "Milestone IDs this milestone depends on" }
+      ]
+    },
+    {
+      "id": "MODEL-ARCHITECTURE",
+      "name": "Architecture Model",
+      "description": "System modules, API endpoints, data models, and architectural rules.",
+      "moduleId": "MOD-CORE",
+      "fields": [
+        { "name": "modules", "type": "Module[]", "required": true, "description": "Subsystem modules" },
+        { "name": "apis", "type": "ApiEndpoint[]", "required": true, "description": "System API endpoints" },
+        { "name": "rules", "type": "ArchitecturalRule[]", "required": true, "description": "Hard and soft architectural constraints" }
+      ]
+    },
+    {
+      "id": "MODEL-CODEBASE-MAP",
+      "name": "Codebase Map Model",
+      "description": "File and directory registry with role, layer, and linked architecture IDs.",
+      "moduleId": "MOD-CORE",
+      "fields": [
+        { "name": "path", "type": "string", "required": true, "description": "Relative file or directory path" },
+        { "name": "role", "type": "string", "required": true, "description": "Short summary of responsibility" },
+        { "name": "layer", "type": "string", "required": true, "description": "Architectural layer" },
+        { "name": "relatedModuleIds", "type": "string[]", "required": false, "description": "Linked module IDs" }
+      ]
+    },
+    {
+      "id": "MODEL-STATE",
+      "name": "State Model",
+      "description": "Project summary, active milestone, completed tasks, and active horizon tasks.",
+      "moduleId": "MOD-CORE",
+      "fields": [
+        { "name": "activeMilestoneId", "type": "string", "required": true, "description": "Currently active milestone" },
+        { "name": "activeHorizonTasks", "type": "Task[]", "required": true, "description": "Current 1-3 concrete tasks" },
+        { "name": "completedWorkSummary", "type": "CompletedItem[]", "required": true, "description": "Log of completed work" }
+      ]
+    },
+    {
+      "id": "MODEL-CANVAS",
+      "name": "Canvas Model",
+      "description": "Visual coordinates, node layouts, and sticky note ideation for React Flow.",
+      "moduleId": "MOD-CORE",
+      "fields": [
+        { "name": "views", "type": "CanvasView[]", "required": true, "description": "List of named visual views" },
+        { "name": "nodes", "type": "Node[]", "required": true, "description": "React Flow compatible nodes" },
+        { "name": "edges", "type": "Edge[]", "required": true, "description": "React Flow compatible edges" }
+      ]
+    },
+    {
+      "id": "MODEL-ACTIVITY",
+      "name": "Activity Log Model",
+      "description": "Append-only activity and audit log entries in activity.jsonl.",
+      "moduleId": "MOD-CORE",
+      "fields": [
+        { "name": "id", "type": "string", "required": true, "description": "Event ID" },
+        { "name": "timestamp", "type": "string", "required": true, "description": "ISO-8601 timestamp" },
+        { "name": "type", "type": "string", "required": true, "description": "Event type" },
+        { "name": "message", "type": "string", "required": true, "description": "Event description" }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "RULE-SSOT",
+      "title": "Single Source of Truth in .project-control",
+      "category": "data_integrity",
+      "rule": "All architectural decisions, APIs, and roadmap items must be recorded in .project-control JSON files before or concurrent with implementation.",
+      "severity": "error",
+      "enforcedBy": "scripts/validate-control.mjs"
+    },
+    {
+      "id": "RULE-CROSS-REF-INTEGRITY",
+      "title": "Strict Referential Integrity",
+      "category": "data_integrity",
+      "rule": "Any milestoneId, moduleId, or apiId referenced in tasks, codebase-map, or canvas must correspond to an existing entity in roadmap or architecture.",
+      "severity": "error",
+      "enforcedBy": "scripts/validate-control.mjs"
+    },
+    {
+      "id": "RULE-ROLLING-WAVE",
+      "title": "Rolling-Wave Active Horizon Limit",
+      "category": "workflow",
+      "rule": "The active horizon tasks in state.json must strictly contain between 1 and 3 concrete tasks (max 5) to prevent cognitive overload and stale backlog debt.",
+      "severity": "error",
+      "enforcedBy": "scripts/validate-control.mjs"
+    },
+    {
+      "id": "RULE-DRIFT-GATE",
+      "title": "Codebase Map Completeness",
+      "category": "boundaries",
+      "rule": "Every repository source and script file must have a registered entry in codebase-map.json detailing its role, layer, and linked module.",
+      "severity": "warning",
+      "enforcedBy": "scripts/validate-control.mjs"
+    },
+    {
+      "id": "RULE-APPEND-ONLY-AUDIT",
+      "title": "Append-Only Activity Log",
+      "category": "workflow",
+      "rule": "activity.jsonl must strictly be appended to; historical entries must not be mutated or deleted to preserve auditability.",
+      "severity": "info",
+      "enforcedBy": "runtime-audit"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "vibe-control",
+  "version": "0.1.0",
+  "description": "Visual architecture, codebase intelligence, and rolling-wave project control system for AI-assisted coding",
+  "type": "module",
+  "main": "scripts/validate-control.mjs",
+  "scripts": {
+    "validate": "node scripts/validate-control.mjs",
+    "test": "node scripts/validate-control.mjs"
+  },
+  "keywords": [
+    "vibe-coding",
+    "project-control",
+    "architecture-graph",
+    "rolling-wave",
+    "codebase-intelligence"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
+}

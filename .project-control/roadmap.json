@@ -1,0 +1,84 @@
+{
+  "$schema": "./schemas/roadmap.schema.json",
+  "version": "1.0.0",
+  "projectId": "vibe-control",
+  "projectName": "VibeControl",
+  "milestones": [
+    {
+      "id": "M1",
+      "title": "Core & Context Engine",
+      "description": "Foundational data schemas, multi-graph state, validation engine, context compiler for prompt generation, and rolling-wave task finisher.",
+      "targetOutcome": "Robust CLI and SSOT state machine capable of validating and compiling LLM prompt context for coding agents.",
+      "status": "in_progress",
+      "order": 1,
+      "dependencies": [],
+      "deliverables": [
+        ".project-control/ schemas and state files",
+        "Validator CLI (npm run validate)",
+        "Context compiler script (compile-prompt)",
+        "Task completion and rolling-wave advance script (complete-task)"
+      ],
+      "estimatedEffort": "1-2 days"
+    },
+    {
+      "id": "M2",
+      "title": "Multi-Graph React Flow UI",
+      "description": "Interactive local visual dashboard featuring multi-layered React Flow canvas (Roadmap, Architecture, Codebase, Rolling Wave, and Ideation sticky notes).",
+      "targetOutcome": "Developers can visually inspect, create, connect, and update project state without manual JSON editing.",
+      "status": "planned",
+      "order": 2,
+      "dependencies": ["M1"],
+      "deliverables": [
+        "Vite + React local control dashboard",
+        "Custom React Flow nodes for Milestones, Modules, APIs, Tasks",
+        "Real-time bidirectional sync with .project-control/ via local server"
+      ],
+      "estimatedEffort": "3-4 days"
+    },
+    {
+      "id": "M3",
+      "title": "Meta-Skill & Rule Generator",
+      "description": "Automated generation of Antigravity / Cursor / Claude Code skills, instruction files, and architectural guardrails from the SSOT graph.",
+      "targetOutcome": "Coding agents automatically receive updated workspace rules and skills whenever architecture changes.",
+      "status": "planned",
+      "order": 3,
+      "dependencies": ["M1"],
+      "deliverables": [
+        "Rule compiler (generates AGENTS.md, GEMINI.md, .cursorrules)",
+        "Skill generator for task execution",
+        "Agent telemetry hook"
+      ],
+      "estimatedEffort": "2 days"
+    },
+    {
+      "id": "M4",
+      "title": "Codebase Scanner & Drift Auditor",
+      "description": "Static analysis tool scanning the filesystem to observe real imports, files, and functions, diffing against intended architecture to flag architectural drift.",
+      "targetOutcome": "Zero architectural drift; CI and pre-commit checks alert developers if unmapped files or unauthorized layer violations occur.",
+      "status": "planned",
+      "order": 4,
+      "dependencies": ["M1", "M2"],
+      "deliverables": [
+        "AST & file tree scanner",
+        "Architecture drift detection engine",
+        "Visual drift warnings in UI and CLI"
+      ],
+      "estimatedEffort": "3 days"
+    },
+    {
+      "id": "M5",
+      "title": "CLI Packaging & Ecosystem Distribution",
+      "description": "Unified global CLI executable (vibe / vibe-control) with init, validate, ui, and compile commands ready for npx and npm global installation.",
+      "targetOutcome": "Any developer can run `npx vibe-control init` in any repository to bootstrap visual project control.",
+      "status": "planned",
+      "order": 5,
+      "dependencies": ["M1", "M2", "M3", "M4"],
+      "deliverables": [
+        "vibe CLI binary with subcommands",
+        "Template scaffolder",
+        "NPM release packaging"
+      ],
+      "estimatedEffort": "2 days"
+    }
+  ]
+}

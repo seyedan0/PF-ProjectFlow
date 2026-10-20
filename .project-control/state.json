@@ -1,0 +1,74 @@
+{
+  "$schema": "./schemas/state.schema.json",
+  "version": "1.0.0",
+  "project": {
+    "id": "vibe-control",
+    "name": "VibeControl",
+    "tagline": "Visual Architecture, Codebase Intelligence & Rolling-Wave Control for Vibe Coding",
+    "proposalSummary": "VibeControl replaces static markdown task plans and chaotic chat sessions with an active multi-graph repository control system. It provides an embedded Single Source of Truth (.project-control), an interactive React Flow dashboard, zero-drift codebase intelligence, and rolling-wave prompt compilation for AI coding agents.",
+    "techStack": {
+      "core": ["Node.js (ESM)", "Zod", "JSON Schema"],
+      "backend": ["Node HTTP / Fastify (local)"],
+      "frontend": ["React 19 / Vite", "@xyflow/react (React Flow)", "Tailwind CSS / Lucide"],
+      "tools": ["Git", "TypeScript / JSDoc", "npm"]
+    }
+  },
+  "activeMilestoneId": "M1",
+  "completedWorkSummary": [],
+  "activeHorizonTasks": [
+    {
+      "id": "TASK-01",
+      "milestoneId": "M1",
+      "moduleId": "MOD-CORE",
+      "relatedApiIds": [],
+      "title": "Core Data Schemas, Multi-Graph State & Validator",
+      "description": "Define multi-layer JSON/Zod schemas, bootstrap .project-control dogfooding state, and build the validation CLI script.",
+      "status": "in_progress",
+      "order": 1,
+      "acceptanceCriteria": [
+        "Package.json initialized with ESM and minimal dependencies",
+        ".project-control/schemas created with JSON Schemas",
+        "scripts/schemas.mjs created with comprehensive Zod schemas",
+        "Bootstrapped .project-control graphs for VibeControl itself",
+        "scripts/validate-control.mjs implemented and passes with 0 errors"
+      ],
+      "assignedFiles": [
+        "package.json",
+        ".gitignore",
+        "scripts/schemas.mjs",
+        "scripts/validate-control.mjs",
+        ".project-control/roadmap.json",
+        ".project-control/architecture.json",
+        ".project-control/codebase-map.json",
+        ".project-control/state.json",
+        ".project-control/canvas.json",
+        ".project-control/activity.jsonl"
+      ],
+      "notes": "Bootstrap execution of Milestone 1"
+    },
+    {
+      "id": "TASK-02",
+      "milestoneId": "M1",
+      "moduleId": "MOD-CONTEXT",
+      "relatedApiIds": [
+        "API-COMPILE-PROMPT",
+        "API-COMPLETE-TASK"
+      ],
+      "title": "CLI Context Compiler & Task Finisher",
+      "description": "Implement CLI utilities to compile active task context into high-signal prompts for coding agents and mark completed tasks while advancing the rolling wave.",
+      "status": "ready",
+      "order": 2,
+      "acceptanceCriteria": [
+        "scripts/compile-prompt.mjs outputs minimal, high-signal task prompt",
+        "scripts/complete-task.mjs archives completed task and rolls to next task",
+        "activity.jsonl receives task completion and rolling wave update entries",
+        "Cross-reference validation confirms zero broken references after rolling"
+      ],
+      "assignedFiles": [
+        "scripts/compile-prompt.mjs",
+        "scripts/complete-task.mjs"
+      ],
+      "notes": "Follows immediately upon completion of TASK-01"
+    }
+  ]
+}
