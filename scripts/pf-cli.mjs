@@ -493,7 +493,15 @@ function handleSyncRules() {
   agyRules += `1. **Check Task Context**: Always inspect \`.project-control/NEXT_TASK_PROMPT.md\` or run \`npm run pf:prompt\` before beginning work.\n`;
   agyRules += `2. **Register All Files**: Whenever you create or edit a file, update \`.project-control/codebase-map.json\` with its layer, role, and linked module.\n`;
   agyRules += `3. **Zero-Drift Validation**: Run \`npm run pf:validate\` to verify schemas and referential integrity.\n`;
-  agyRules += `4. **Complete Task**: Run \`npm run pf:complete <taskId> -- --summary "..."\` when your task meets its acceptance criteria.\n`;
+  agyRules += `4. **Complete Task**: Run \`npm run pf:complete <taskId> -- --summary "..."\` when your task meets its acceptance criteria.\n\n`;
+
+  agyRules += `## 5. Production Skills Pack & Trigger Scenarios\n`;
+  agyRules += `ProjectFlow provides 5 specialized production skills inside \`.agents/skills/\`:\n`;
+  agyRules += `- **\`project-flow\`**: Main autonomous project controller. Activated for overall project governance, rolling-wave planning, and prompt compilation.\n`;
+  agyRules += `- **\`pf-spec-architect\`**: GitHub Spec-Kit & API contract synthesis. Activated when ingesting PRDs/specs, defining API endpoints, data models, rules, and acceptance criteria.\n`;
+  agyRules += `- **\`pf-graph-choreographer\`**: C4 Model & graph ergonomics. Activated when building or updating roadmap/architecture graphs to prevent spiderweb clutter (max 7–12 nodes/view).\n`;
+  agyRules += `- **\`pf-visual-storyteller\`**: Technical visual director & Xiaohei protocol. Activated when generating visual architecture metaphors, SVG diagrams, and Ideation Canvas storyboards (\`canvas.json\`).\n`;
+  agyRules += `- **\`pf-drift-auditor\`**: Architecture drift auditor. Activated after completing tasks, during code audits, and when running \`npm run pf:scan\` to reconcile Intended vs. Observed architecture.\n`;
 
   const agyPath = path.join(agentsRulesDir, "project-flow.md");
   fs.writeFileSync(agyPath, agyRules, "utf-8");
@@ -513,7 +521,14 @@ function handleSyncRules() {
     for (const r of rules) {
       cursorRules += `- **${r.id}**: ${r.rule}\n`;
     }
+    cursorRules += `\n`;
   }
+  cursorRules += `### Specialized Skills Pack (.agents/skills/):\n`;
+  cursorRules += `- **\`project-flow\`**: Core project controller, intake bootstrapping, and prompt compilation.\n`;
+  cursorRules += `- **\`pf-spec-architect\`**: Spec-Kit API contracts, data models, and rolling-wave task synthesis.\n`;
+  cursorRules += `- **\`pf-graph-choreographer\`**: C4 Model layering, node density limits (7-12 nodes), and clean graphs.\n`;
+  cursorRules += `- **\`pf-visual-storyteller\`**: Architectural metaphors, SVG diagrams, and Ideation Canvas storyboards.\n`;
+  cursorRules += `- **\`pf-drift-auditor\`**: Tri-model drift audit (Intended vs. Observed) and \`npm run pf:scan\`.\n`;
 
   const cursorPath = path.join(projectRoot, ".cursorrules");
   fs.writeFileSync(cursorPath, cursorRules, "utf-8");
@@ -528,13 +543,21 @@ function handleSyncRules() {
   claudeMd += `- \`npm run pf:prompt\` - Compile focused task prompt (\`.project-control/NEXT_TASK_PROMPT.md\`).\n`;
   claudeMd += `- \`npm run pf:validate\` - Validate schemas, cross-referenced IDs, and check for drift.\n`;
   claudeMd += `- \`npm run pf:complete <taskId> -- --summary "..."\` - Complete a task and advance rolling wave.\n`;
-  claudeMd += `- \`npm run pf:sync-rules\` - Re-export architectural rules.\n\n`;
+  claudeMd += `- \`npm run pf:sync-rules\` - Re-export architectural rules.\n`;
+  claudeMd += `- \`npm run pf:scan\` - Static scanner comparing disk imports to architectural rules.\n\n`;
   if (rules.length > 0) {
     claudeMd += `## Architectural Rules\n`;
     for (const r of rules) {
       claudeMd += `- **${r.id}**: ${r.rule}\n`;
     }
+    claudeMd += `\n`;
   }
+  claudeMd += `## Specialized Skills Pack (.agents/skills/)\n`;
+  claudeMd += `- **\`project-flow\`**: Core project controller and rolling-wave prompt compiler.\n`;
+  claudeMd += `- **\`pf-spec-architect\`**: Ingest PRDs/specs, define API schemas, and synthesize rolling-wave tasks.\n`;
+  claudeMd += `- **\`pf-graph-choreographer\`**: Enforce C4 Model layering and clean ELKjs graphs (max 7-12 nodes).\n`;
+  claudeMd += `- **\`pf-visual-storyteller\`**: Generate visual metaphors, SVG graphics, and Ideation Canvas storyboards.\n`;
+  claudeMd += `- **\`pf-drift-auditor\`**: Audit architecture drift, verify imports, and reconcile with \`npm run pf:scan\`.\n`;
 
   const claudePath = path.join(projectRoot, "CLAUDE.md");
   fs.writeFileSync(claudePath, claudeMd, "utf-8");

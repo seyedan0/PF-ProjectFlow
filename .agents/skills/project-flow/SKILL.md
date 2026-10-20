@@ -16,6 +16,19 @@ description: >-
 
 ---
 
+## 🧰 The ProjectFlow Skills Ecosystem
+
+ProjectFlow orchestrates 4 specialized domain skills to ensure enterprise-grade architectural integrity:
+
+| Specialized Skill | Operational Purpose | When to Activate |
+| :--- | :--- | :--- |
+| **`pf-spec-architect`** | GitHub Spec-Kit & OpenAPI contract synthesis | Ingesting PRDs, defining API contracts, data models, rules, and initial rolling-wave tasks. |
+| **`pf-graph-choreographer`** | C4 Model & ELKjs graph ergonomics | Structuring `roadmap.json`, `architecture.json`, and `codebase-map.json` under Miller's Law (max 7–12 nodes/view). |
+| **`pf-visual-storyteller`** | Technical visual metaphors & SVG storyboards | Generating diagrams, system metaphors, SVG graphics, and Ideation Canvas cards (`canvas.json`). |
+| **`pf-drift-auditor`** | Evidence-based architecture drift analysis | Running `npm run pf:scan`, post-task verification, and reconciling Intended vs. Observed architecture. |
+
+---
+
 ## Quick Reference Commands
 
 | Intent | Command | Purpose |
@@ -24,8 +37,10 @@ description: >-
 | **Inspect Progress** | `npm run pf:status` | Shows initialization state, macro roadmap progress, and active tasks. |
 | **Compile Prompt** | `npm run pf:prompt [taskId]` | Compiles a focused, low-token context prompt to `.project-control/NEXT_TASK_PROMPT.md`. |
 | **Finish Task** | `npm run pf:complete <taskId> -- --summary "..."` | Archives task, checks git changes for unmapped files, and advances wave. |
+| **Scan Codebase & Drift** | `npm run pf:scan` | Multi-language static scanner checking imports against architectural rules. |
 | **Verify Integrity** | `npm run pf:validate` | Enforces schemas, cross-referenced IDs, and physical codebase sync. |
 | **Sync Rules** | `npm run pf:sync-rules` | Exports architectural rules to Antigravity, Cursor, and Claude rule files. |
+| **Start Studio UI** | `npm run pf:ui` (or `pf:ui:demo`) | Launches the Visual Control Studio server on `http://localhost:4321`. |
 
 ---
 
@@ -36,13 +51,14 @@ description: >-
 > «پروژه رو بر اساس داکیومنت‌ها ستاپ کن» / "Set up and customize ProjectFlow based on my project docs"
 
 When starting with a blank ProjectFlow template (`"initialized": false`):
-1. **Read the Intake Guide**: Follow [BOOTSTRAP_INTAKE.md](file:///d:/Programing/PF-ProjectFlow/BOOTSTRAP_INTAKE.md).
-2. **Extract Project Identity & Stack**:
-   - Write project name, proposal summary, and tech stack into `.project-control/state.json`.
+1. **Load `pf-spec-architect`**:
+   Follow [pf-spec-architect](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-spec-architect/SKILL.md) and [BOOTSTRAP_INTAKE.md](file:///d:/Programing/PF-ProjectFlow/BOOTSTRAP_INTAKE.md) during Step 1 & Step 2 to extract the core value proposition, non-goals, API contracts, entity models, and architectural rules from project specs.
+2. **Apply `pf-graph-choreographer`**:
+   Follow [pf-graph-choreographer](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-graph-choreographer/SKILL.md) during Step 3 to structure the 5 graphs according to the C4 Model hierarchy, preventing hairball spiderwebs and enforcing Miller's Law (7–12 nodes per view).
 3. **Graph 1 - End-to-End Macro Roadmap (`roadmap.json`)**:
-   - Break the project lifecycle into 3 to 6 sequential/parallel Milestones (`M1` to `M6`) and link their edges.
+   - Break project lifecycle into 3 to 6 sequential/parallel Milestones (`M1` to `M6`) and link dependency edges.
 4. **Graph 2 - System Modules, APIs & Data Models (`architecture.json`)**:
-   - Define subsystems (`MOD-AUTH`, `MOD-CORE`, etc.), REST/GraphQL endpoints with payload contracts, entities, and architectural rules.
+   - Define bounded subsystems (`MOD-*`), REST/GraphQL contracts with payload schemas, entities, and architectural rules.
 5. **Graph 3 - Expected Codebase Skeleton (`codebase-map.json`)**:
    - Register intended folders and initial entry files (`status: "planned"`).
 6. **Graph 4 - Initial Rolling-Wave Tasks (`state.json`)**:
@@ -63,8 +79,9 @@ When starting with a blank ProjectFlow template (`"initialized": false`):
    Run `npm run pf:status` or read `.project-control/state.json` and `.project-control/roadmap.json`.
    - Identify active milestone (`state.activeMilestoneId`).
    - Review completed work history (`state.completedTasks`).
-2. **Analyze Architectural Boundaries**:
-   Read `.project-control/architecture.json` and `.project-control/codebase-map.json` to determine what modules or APIs are needed next.
+2. **Consult `pf-spec-architect`**:
+   Extract missing acceptance criteria and target file assignments according to the rolling-wave formula:
+   `Next Tasks = Active Milestone Goal - Completed History + Current Codebase Map`.
 3. **Formulate Next 1-3 Horizon Tasks**:
    Follow [rolling-wave-planning.md](file:///d:/Programing/PF-ProjectFlow/.agents/skills/project-flow/references/rolling-wave-planning.md).
    - Keep tasks scoped to 1-2 hours of focused coding.
@@ -74,21 +91,16 @@ When starting with a blank ProjectFlow template (`"initialized": false`):
 4. **Update `state.json`**:
    Save new tasks into `state.json.activeTasks`. If new planned files were introduced, add them with `status: "planned"` to `codebase-map.json`.
 5. **Compile Next Prompt**:
-   Run:
-   ```bash
-   npm run pf:prompt <nextTaskId>
-   ```
-   This generates `.project-control/NEXT_TASK_PROMPT.md`. Present a concise summary of the proposed task to the user for approval.
+   Run `npm run pf:prompt <nextTaskId>` to generate `.project-control/NEXT_TASK_PROMPT.md`.
 
 ---
 
-### Mode 2: Execute Task
+### Mode 2: Execute Task & Verify
 *Triggered when the user says:*
 > «تسک فعلی رو اجرا کن» / "Execute current task" / "Start building"
 
 1. **Read ONLY the Compiled Task Prompt**:
-   To conserve tokens and stay laser-focused, read **ONLY** [`.project-control/NEXT_TASK_PROMPT.md`](file:///d:/Programing/PF-ProjectFlow/.project-control/NEXT_TASK_PROMPT.md).
-   *Do NOT re-read all large JSON files unless specific details are missing.*
+   Read **ONLY** [`.project-control/NEXT_TASK_PROMPT.md`](file:///d:/Programing/PF-ProjectFlow/.project-control/NEXT_TASK_PROMPT.md) to conserve tokens.
 2. **Implement Code Changes**:
    Write or refactor code strictly fulfilling acceptance criteria. Respect layer boundaries defined in [architecture-drift-rules.md](file:///d:/Programing/PF-ProjectFlow/.agents/skills/project-flow/references/architecture-drift-rules.md).
 3. **Register Files in Codebase Map**:
@@ -98,15 +110,13 @@ When starting with a blank ProjectFlow template (`"initialized": false`):
    - Set `lastModifiedByTask: "<currentTaskId>"`.
    - Set `status: "active"`.
 4. **Complete Task & Validate**:
-   Run the task finisher:
+   Run:
    ```bash
    npm run pf:complete <currentTaskId> -- --summary "Concise summary of implementation"
-   ```
-   Run the validator:
-   ```bash
    npm run pf:validate
    ```
-   Ensure zero errors and zero unmapped file warnings before declaring the task done.
+5. **Audit Drift with `pf-drift-auditor`**:
+   Follow [pf-drift-auditor](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-drift-auditor/SKILL.md) and execute `npm run pf:scan` to guarantee zero boundary violations or unregistered files before declaring completion.
 
 ---
 
@@ -114,25 +124,37 @@ When starting with a blank ProjectFlow template (`"initialized": false`):
 *Triggered when checking code quality and architectural health:*
 > «ممیزی کد و بررسی انحراف معماری» / "Audit codebase for drift" / "Check architecture"
 
-1. **Verify State Consistency**:
-   Run:
+1. **Activate `pf-drift-auditor`**:
+   Follow [pf-drift-auditor](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-drift-auditor/SKILL.md).
+2. **Run Static Scanner & Validator**:
    ```bash
+   npm run pf:scan
    npm run pf:validate
    ```
-2. **Review Physical vs Logical Synchronization**:
-   - Check if any files on disk are unmapped in `codebase-map.json`.
-   - Check if any module dependencies violate the layer hierarchy (`core` -> `server` -> `ui`).
-   - Check if API implementations diverge from contracts declared in `architecture.json`.
-3. **Report & Remediate**:
-   Present an audit table showing unregistered files, broken referential IDs, or unauthorized layer imports.
+3. **Tri-Model Comparison**:
+   Compare Intended Architecture (`architecture.json`), Documented Map (`codebase-map.json`), and Observed Reality (actual disk imports).
+4. **Remediate Findings**:
+   - Classify into Categories A (Shadow Code), B (Ghost References), C (Boundary Violations), and D (Evolution Drift).
+   - Use `npm run pf:scan -- --fix` to auto-register newly found files or flag drift violations.
 
 ---
 
-### Mode 4: Rule & Context Synchronization
+### Mode 4: Visual Storyboarding & Ideation Canvas
+*Triggered when visualizing architecture, creating diagrams, or designing proposals:*
+> «نمودار یا تصویر مفهومی بکش» / "Draw a diagram of the architecture" / "Create visual storyboard"
+
+1. **Activate `pf-visual-storyteller`**:
+   Follow [pf-visual-storyteller](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-visual-storyteller/SKILL.md).
+2. **Design Shot List**: Map technical concepts to canonical composition patterns (Sieve/Funnel, Split-Screen Contrast, The Bridge, The Control Loop, Iceberg, Hub & Orbit).
+3. **Generate Visuals**: Produce crisp SVGs or populate `.project-control/canvas.json` nodes and edges following the Xiaohei Visual Style DNA (`references/style-dna.md`).
+
+---
+
+### Mode 5: Rule & Context Synchronization
 *Triggered after any architectural or milestone change:*
 
 Run:
 ```bash
 npm run pf:sync-rules
 ```
-This guarantees that Antigravity, Cursor, and Claude agents automatically receive the latest rules, module contracts, and active milestone goals without manual synchronization.
+This guarantees that Antigravity, Cursor, and Claude agents automatically receive the latest rules, module contracts, active milestone goals, and skills inventory.

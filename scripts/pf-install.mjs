@@ -100,16 +100,25 @@ export async function installProjectFlow(targetPath, options = {}) {
   }
   console.log(`  ${symbols.success} Initialized clean blank skeleton in .project-control/`);
 
-  // 2. Copy Agent Skill (.agents/skills/project-flow/)
-  console.log(`\n2. Installing Agent Skill ${colors.cyan}.agents/skills/project-flow/${colors.reset}...`);
-  const sourceSkillDir = path.join(sourceRoot, ".agents", "skills", "project-flow");
-  const targetSkillDir = path.join(targetDir, ".agents", "skills", "project-flow");
+  // 2. Copy Agent Skills (.agents/skills/)
+  console.log(`\n2. Installing Agent Skills Pack ${colors.cyan}.agents/skills/${colors.reset}...`);
+  const skillsToInstall = [
+    "project-flow",
+    "pf-visual-storyteller",
+    "pf-graph-choreographer",
+    "pf-spec-architect",
+    "pf-drift-auditor"
+  ];
+  for (const skillName of skillsToInstall) {
+    const sourceSkillDir = path.join(sourceRoot, ".agents", "skills", skillName);
+    const targetSkillDir = path.join(targetDir, ".agents", "skills", skillName);
 
-  if (fs.existsSync(sourceSkillDir)) {
-    copyDirRecursive(sourceSkillDir, targetSkillDir);
-    console.log(`  ${symbols.success} Installed project-flow agent skill and operational guides`);
-  } else {
-    console.log(`  ${symbols.warning} Skill directory not found at source, skipped`);
+    if (fs.existsSync(sourceSkillDir)) {
+      copyDirRecursive(sourceSkillDir, targetSkillDir);
+      console.log(`  ${symbols.success} Installed skill: ${colors.bold}${skillName}${colors.reset}`);
+    } else {
+      console.log(`  ${symbols.warning} Skill directory '${skillName}' not found at source, skipped`);
+    }
   }
 
   // 3. Copy BOOTSTRAP_INTAKE.md

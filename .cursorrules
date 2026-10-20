@@ -9,3 +9,9 @@ You are developing Target Project (Custom project managed via ProjectFlow.).
 4. **Validation Check**: Run `npm run pf:validate` to ensure 0 errors.
 5. **Finish Task**: Use `npm run pf:complete <taskId> -- --summary "..."` when done.
 
+### Specialized Skills Pack (.agents/skills/):
+- **`project-flow`**: Core project controller, intake bootstrapping, and prompt compilation.
+- **`pf-spec-architect`**: Spec-Kit API contracts, data models, and rolling-wave task synthesis.
+- **`pf-graph-choreographer`**: C4 Model layering, node density limits (7-12 nodes), and clean graphs.
+- **`pf-visual-storyteller`**: Architectural metaphors, SVG diagrams, and Ideation Canvas storyboards.
+- **`pf-drift-auditor`**: Tri-model drift audit (Intended vs. Observed) and `npm run pf:scan`.

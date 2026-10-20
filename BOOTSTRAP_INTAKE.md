@@ -14,31 +14,47 @@ Your mission as the AI Coding Agent is to **ingest the user's project documentat
 
 ---
 
+## 🧩 Specialized Sub-Skills Directive
+
+During bootstrapping and continuous execution, you MUST load and strictly follow the 4 specialized domain skills:
+
+1. **`pf-spec-architect`** (Step 1, Step 2, and Step 5): Follow [.agents/skills/pf-spec-architect/SKILL.md](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-spec-architect/SKILL.md) to extract core intent, OpenAPI contracts, payload schemas, architectural rules (from the rules catalog), and rolling-wave tasks.
+2. **`pf-graph-choreographer`** (Step 3 and graph updates): Follow [.agents/skills/pf-graph-choreographer/SKILL.md](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-graph-choreographer/SKILL.md) to enforce C4 Model layering (Clients -> APIs -> Domain Services -> Storage), explicit edge verbs, and Miller's Law (max 7–12 nodes per view to prevent hairball graphs).
+3. **`pf-visual-storyteller`**: Follow [.agents/skills/pf-visual-storyteller/SKILL.md](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-visual-storyteller/SKILL.md) whenever generating visual architecture metaphors, responsive SVG diagrams, or Ideation Canvas (`canvas.json`) storyboards.
+4. **`pf-drift-auditor`**: Follow [.agents/skills/pf-drift-auditor/SKILL.md](file:///d:/Programing/PF-ProjectFlow/.agents/skills/pf-drift-auditor/SKILL.md) after completing any coding task or executing `npm run pf:scan` to perform tri-model reconciliation (Intended vs. Documented vs. Observed).
+
+---
+
 ## 📋 The 6-Step Intake Protocol
 
 ```
 +--------------------------------------------------------------------------+
 | Step 1: Extract Project Identity, Vision & Tech Stack -> state.json      |
+|         (Follow: pf-spec-architect)                                      |
 +--------------------------------------------------------------------------+
                                     |
                                     v
 +--------------------------------------------------------------------------+
 | Step 2: Build Macro Milestone Roadmap -> roadmap.json                    |
+|         (Follow: pf-spec-architect & pf-graph-choreographer)             |
 +--------------------------------------------------------------------------+
                                     |
                                     v
 +--------------------------------------------------------------------------+
 | Step 3: Define Modules, API Contracts & Rules -> architecture.json       |
+|         (Follow: C4 Model in pf-graph-choreographer)                     |
 +--------------------------------------------------------------------------+
                                     |
                                     v
 +--------------------------------------------------------------------------+
 | Step 4: Map Intended Codebase Skeleton -> codebase-map.json              |
+|         (Follow: pf-spec-architect)                                      |
 +--------------------------------------------------------------------------+
                                     |
                                     v
 +--------------------------------------------------------------------------+
 | Step 5: Formulate the First 1-3 Rolling-Wave Tasks -> state.json         |
+|         (Follow: pf-spec-architect Task Synthesis)                       |
 +--------------------------------------------------------------------------+
                                     |
                                     v
@@ -49,14 +65,15 @@ Your mission as the AI Coding Agent is to **ingest the user's project documentat
 
 ---
 
-### Step 1: Project Identity & Tech Stack
-Extract the core project parameters from user documentation or prompt.
+### Step 1: Project Identity & Tech Stack (via `pf-spec-architect`)
+Extract the core project parameters from user documentation or prompt using Phase 1 of `pf-spec-architect`.
 - **Name & Purpose**: Clear project name, 1-line tagline, and 2-3 sentence proposal summary.
 - **Technology Stack**: List core runtime, backend framework, database, frontend framework, and toolchain.
 - **Target Audience / Goal**: Who uses this system and what is the definition of MVP success?
+- **Non-Goals & Constraints**: Explicit boundaries of what will NOT be built in current version.
 
 **Missing Information Check**:
-If the user didn't specify the stack or database, *prompt them before guessing*:
+If the user didn't specify the stack or database, *prompt them with at most 3 clarifying questions before guessing*:
 > *"I noticed the project documentation doesn't specify the database or frontend framework. Do you prefer PostgreSQL + Node.js or an alternative stack?"*
 
 Write to `.project-control/state.json`:
@@ -75,7 +92,7 @@ Write to `.project-control/state.json`:
 ---
 
 ### Step 2: Graph 1 - End-to-End Macro Roadmap (`roadmap.json`)
-Break the entire project lifecycle from start to finish into 3 to 6 macro milestones (`M1`, `M2`, `M3`, etc.).
+Break the entire project lifecycle from start to finish into 3 to 6 macro milestones (`M1`, `M2`, `M3`, etc.) using Left-to-Right layout guidance from `pf-graph-choreographer`.
 - **Milestone Structure**:
   - `id`: `"M1"`, `"M2"`, etc.
   - `title`: Short descriptive phase title (e.g. `"Core Authentication & Database Schema"`).
@@ -95,11 +112,11 @@ Break the entire project lifecycle from start to finish into 3 to 6 macro milest
 ---
 
 ### Step 3: Graph 2 - Architecture, Modules & APIs (`architecture.json`)
-Extract the system architecture from the target documentation:
-1. **Modules**: Divide system into cohesive functional subsystems (e.g., `MOD-AUTH`, `MOD-BILLING`, `MOD-NOTIFICATIONS`).
+Structure system architecture following the C4 Model tiers in `pf-graph-choreographer`:
+1. **Modules (Tier 1 & Tier 3)**: Divide system into cohesive functional subsystems (e.g., `MOD-AUTH`, `MOD-BILLING`, `MOD-NOTIFICATIONS`).
    - Assign layer: `"core"`, `"server"`, `"cli"`, `"ui"`, or `"shared"`.
    - List explicit responsibilities and inter-module dependencies.
-2. **API Contracts**: Detail all known REST/GraphQL endpoints:
+2. **API Contracts (Tier 2)**: Detail all known REST/GraphQL endpoints using OpenAPI precision from `pf-spec-architect`:
    - `id`: `"API-AUTH-LOGIN"`, `"API-PAYMENTS-CHARGE"`, etc.
    - `moduleId`: Linked module ID.
    - `milestoneId`: Milestone where this endpoint is built (e.g. `"M1"`).
@@ -108,10 +125,10 @@ Extract the system architecture from the target documentation:
    - `description`: What the endpoint does.
    - `requestPayload`: Sample JSON request body.
    - `responsePayload`: Sample JSON response.
-3. **Data Models / Entities**: Core database tables or domain models with field types.
+3. **Data Models / Entities (Tier 4)**: Core database tables or domain models with field types and primary keys.
 4. **Architectural Rules & Guardrails**:
-   Explicit constraints (e.g. `"All database queries must use prepared statements"`, `"UI never directly accesses filesystem"`, `"JWT auth required for /api/v1/protected/*"`).
-5. **Graph Edges**: Connect module dependencies for visualization.
+   Explicit constraints selected from `references/stack-rules-catalog.md` (e.g. `"UI never directly accesses database"`, `"All endpoint mutations require schema validation"`).
+5. **Graph Edges**: Connect module dependencies with explicit verbs (`renders`, `calls`, `persists_to`).
 
 ---
 
@@ -131,7 +148,7 @@ Define the expected file and folder layout based on the project's chosen tech st
 
 ### Step 5: Graph 4 - Initial Rolling-Wave Tasks (`state.json`)
 > [!CAUTION]
-> **Anti-Hallucination Guardrail**:
+> **Anti-Hallucination Guardrail (from `pf-spec-architect`)**:
 > Do NOT generate 50 static tasks upfront! Generate **ONLY the first 1 to 3 concrete starting tasks** for Milestone `M1`.
 
 Formulate tasks that can each be completed in 1-2 coding turns:
@@ -160,7 +177,7 @@ Each task must specify:
    ```bash
    npm run pf:sync-rules
    ```
-   This generates `.agents/rules/project-flow.md`, `.cursorrules`, and `CLAUDE.md` customized with the new project's rules, modules, and active task.
+   This generates `.agents/rules/project-flow.md`, `.cursorrules`, and `CLAUDE.md` customized with the new project's rules, modules, skills pack, and active task.
 4. Compile the first task prompt:
    ```bash
    npm run pf:prompt TASK-01
@@ -179,9 +196,11 @@ Once bootstrapped, any AI coding agent follows this simple loop:
    - Write code.
    - Register created files in `codebase-map.json`.
    - Run `npm run pf:complete <taskId> -- --summary "..."`.
-   - Run `npm run pf:validate`.
+   - Run `npm run pf:scan` and `npm run pf:validate` (Audited by `pf-drift-auditor`).
 2. **To Plan Next Step**:
    - Run `npm run pf:status`.
    - Inspect roadmap and completed work history.
-   - Add the next 1-2 tasks to `state.json.activeTasks`.
+   - Add the next 1-2 tasks to `state.json.activeTasks` using `pf-spec-architect`.
    - Run `npm run pf:prompt`.
+3. **To Visualize & Ideate**:
+   - Follow `pf-visual-storyteller` to create technical metaphors, diagrams, and canvas cards in `canvas.json`.

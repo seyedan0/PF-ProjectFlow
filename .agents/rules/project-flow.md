@@ -24,3 +24,11 @@ Every AI coding agent operating in this repository MUST follow this protocol:
 2. **Register All Files**: Whenever you create or edit a file, update `.project-control/codebase-map.json` with its layer, role, and linked module.
 3. **Zero-Drift Validation**: Run `npm run pf:validate` to verify schemas and referential integrity.
 4. **Complete Task**: Run `npm run pf:complete <taskId> -- --summary "..."` when your task meets its acceptance criteria.
+
+## 5. Production Skills Pack & Trigger Scenarios
+ProjectFlow provides 5 specialized production skills inside `.agents/skills/`:
+- **`project-flow`**: Main autonomous project controller. Activated for overall project governance, rolling-wave planning, and prompt compilation.
+- **`pf-spec-architect`**: GitHub Spec-Kit & API contract synthesis. Activated when ingesting PRDs/specs, defining API endpoints, data models, rules, and acceptance criteria.
+- **`pf-graph-choreographer`**: C4 Model & graph ergonomics. Activated when building or updating roadmap/architecture graphs to prevent spiderweb clutter (max 7–12 nodes/view).
+- **`pf-visual-storyteller`**: Technical visual director & Xiaohei protocol. Activated when generating visual architecture metaphors, SVG diagrams, and Ideation Canvas storyboards (`canvas.json`).
+- **`pf-drift-auditor`**: Architecture drift auditor. Activated after completing tasks, during code audits, and when running `npm run pf:scan` to reconcile Intended vs. Observed architecture.
